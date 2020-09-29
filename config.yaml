@@ -1,0 +1,8 @@
+metrics:
+  counters:
+    - name: some_counter
+      namespace: ""
+      subsystem: ""
+      help: Some counter help
+      labels:
+        - some_counter_label
