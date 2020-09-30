@@ -2,7 +2,7 @@ package handler
 
 import (
 	"github.com/dimitriin/service-assistant/pkg/metrics"
-	"github.com/dimitriin/service-assistant/pkg/protocol/models"
+	"github.com/dimitriin/service-assistant/pkg/protocol/cmd"
 )
 
 type CounterIncHandler struct {
@@ -13,7 +13,7 @@ func NewCounterIncHandler(registry *metrics.Registry) *CounterIncHandler {
 	return &CounterIncHandler{registry: registry}
 }
 
-func (h *CounterIncHandler) handle(cmd *models.CounterIncCmd) error {
+func (h *CounterIncHandler) handle(cmd *cmd.CounterIncCmd) error {
 	counter, err := h.registry.GetCounter(cmd.Name)
 
 	if err != nil {

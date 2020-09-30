@@ -4,7 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 
-	"github.com/dimitriin/service-assistant/pkg/protocol/models"
+	"github.com/dimitriin/service-assistant/pkg/protocol/cmd"
 	"github.com/golang/protobuf/proto"
 )
 
@@ -38,9 +38,9 @@ func (d *Decoder) Decode(data []byte, p *Packet) error {
 func (d *Decoder) getProtoMessageByType(t uint16) (proto.Message, error) {
 	switch t {
 	case CmdCounterIncType:
-		return &models.CounterIncCmd{}, nil
+		return &cmd.CounterIncCmd{}, nil
 	case CmdCounterAddType:
-		return &models.CounterAddCmd{}, nil
+		return &cmd.CounterAddCmd{}, nil
 	default:
 		return nil, fmt.Errorf("unknown packet type %d", t)
 	}

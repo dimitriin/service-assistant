@@ -5,6 +5,7 @@ go 1.14
 require (
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/golang/protobuf v1.3.2
+	github.com/gorilla/mux v1.8.0
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/prometheus/client_golang v1.0.0
 	github.com/prometheus/common v0.4.1

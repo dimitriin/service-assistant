@@ -3,7 +3,7 @@ package handler
 import (
 	"fmt"
 
-	"github.com/dimitriin/service-assistant/pkg/protocol/models"
+	"github.com/dimitriin/service-assistant/pkg/protocol/cmd"
 )
 
 type AggregateCmdHandler struct {
@@ -16,12 +16,12 @@ func NewAggregateCmdHandler(counterIncHandler *CounterIncHandler, counterAddHand
 }
 
 func (h *AggregateCmdHandler) Handle(value interface{}) error {
-	switch cmd := value.(type) {
-	case *models.CounterIncCmd:
-		return h.counterIncHandler.handle(cmd)
-	case *models.CounterAddCmd:
-		return h.counterAddHandler.handle(cmd)
+	switch cmdValue := value.(type) {
+	case *cmd.CounterIncCmd:
+		return h.counterIncHandler.handle(cmdValue)
+	case *cmd.CounterAddCmd:
+		return h.counterAddHandler.handle(cmdValue)
 	default:
-		return fmt.Errorf("unexpected cmd %#v", cmd)
+		return fmt.Errorf("unexpected cmd %#v", cmdValue)
 	}
 }

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/dimitriin/service-assistant/pkg/protocol/models"
+	"github.com/dimitriin/service-assistant/pkg/protocol/cmd"
 	"github.com/golang/protobuf/proto"
 )
 
@@ -20,7 +20,7 @@ func main() {
 	buf := make([]byte, 2)
 	binary.LittleEndian.PutUint16(buf, 1)
 
-	m := &models.CounterIncCmd{
+	m := &cmd.CounterIncCmd{
 		Name: "some_counter",
 		Labels: map[string]string{
 			"some_counter_label": "some_counter_label_value",
