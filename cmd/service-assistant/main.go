@@ -40,7 +40,8 @@ func main() {
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
 	viper.SetDefault("service.http.address", ":8181")
-	viper.SetDefault("service.udp.address", ":8282")
+	viper.SetDefault("service.conn.network", "unixgram")
+	viper.SetDefault("service.conn.address", "/var/run/service-assistant/service-assistant.sock")
 
 	if err := viper.ReadInConfig(); err != nil {
 		logger.Fatal("read config file error", zap.Error(err))
@@ -66,7 +67,7 @@ func main() {
 		logger.Fatal("metrics register error", zap.Error(err))
 	}
 
-	pc, err := net.ListenPacket("udp", cfg.Service.UDP.Address)
+	pc, err := net.ListenPacket(cfg.Service.Conn.Network, cfg.Service.Conn.Address)
 
 	if err != nil {
 		logger.Fatal("listen error", zap.Error(err))

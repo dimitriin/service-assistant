@@ -28,7 +28,7 @@ func main() {
 		_ = logger.Sync()
 	}()
 
-	conn, err := net.Dial("udp", "127.0.0.1:8282")
+	conn, err := net.Dial("unixgram", "/var/run/service-assistant/service-assistant.sock")
 
 	if err != nil {
 		log.Fatalf("unable to connect to assistant", zap.Error(err))

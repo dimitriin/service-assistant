@@ -21,7 +21,22 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Chart.Name }}-service-assistant
+          {{- if .Values.assistant.image.fullname }}
+          image: {{ .Values.assistant.image.fullname }}
+          {{- else }}
+          image: "{{ .Values.assistant.image.repository }}:{{ .Values.assistant.image.tag }}"
+          {{- end }}
+          imagePullPolicy: {{ .Values.assistant.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.assistant.resources | nindent 12 }}
+          volumeMounts:
+            - name: {{ .Chart.Name }}-assistant-config
+              mountPath: /etc/service-assistant/config
+              readOnly: true
+            - name: {{ .Chart.Name }}-assistant-sock-dir
+              mountPath: /var/run/service-assistant
+        - name: {{ .Chart.Name }}-assisted-example-service
           {{- if .Values.image.fullname }}
           image: {{ .Values.image.fullname }}
           {{- else }}
@@ -35,9 +50,6 @@ spec:
             - name: assistant-http
               containerPort: 8181
               protocol: TCP
-            - name: assistant-udp
-              containerPort: 8282
-              protocol: UDP
           livenessProbe:
             httpGet:
               path: /healthz
@@ -48,23 +60,15 @@ spec:
               port: assistant-http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-        - name: {{ .Chart.Name }}-assistant-config
-          {{- if .Values.assistant.image.fullname }}
-          image: {{ .Values.assistant.image.fullname }}
-          {{- else }}
-          image: "{{ .Values.assistant.image.repository }}:{{ .Values.assistant.image.tag }}"
-          {{- end }}
-          imagePullPolicy: {{ .Values.assistant.image.pullPolicy }}
-          resources:
-            {{- toYaml .Values.assistant.resources | nindent 12 }}
           volumeMounts:
-            - name: {{ .Chart.Name }}-assistant-config
-              mountPath: /etc/service-assistant/config
-              readOnly: true
+            - name: {{ .Chart.Name }}-assistant-sock-dir
+              mountPath: /var/run/service-assistant
       volumes:
         - name: {{ .Chart.Name }}-assistant-config
           configMap:
             name: {{ .Chart.Name }}-assistant-configmap
+        - name: {{ .Chart.Name }}-assistant-sock-dir
+          emptyDir: { }
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -1,11 +1,12 @@
 package config
 
 type Service struct {
-	UDP  UDP
+	Conn Conn
 	HTTP HTTP
 }
 
-type UDP struct {
+type Conn struct {
+	Network string
 	Address string
 }
 
