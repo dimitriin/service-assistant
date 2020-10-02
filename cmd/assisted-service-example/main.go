@@ -53,16 +53,16 @@ func main() {
 			Ttl: 120,
 		}
 
-		payload, _ := proto.Marshal(bit)
+		data, _ := proto.Marshal(bit)
 
-		n, err := fmt.Fprintf(conn, "%s%s", string(buf), string(payload))
+		n, err := fmt.Fprintf(conn, "%s%s", string(buf), string(data))
 
 		if err != nil {
 			writer.WriteHeader(http.StatusInternalServerError)
 			_, _ = writer.Write([]byte(fmt.Sprintf(`{"n":%d,"err":"%s"}`, n, err)))
 		} else {
 			writer.WriteHeader(http.StatusOK)
-			_, _ = writer.Write([]byte(`{"n":%d,"err":null}`))
+			_, _ = writer.Write([]byte(fmt.Sprintf(`{"n":%d,"err":null}`, n)))
 		}
 	})
 	r.Path("/readyzBit").HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
@@ -73,16 +73,16 @@ func main() {
 			Ttl: 120,
 		}
 
-		payload, _ := proto.Marshal(bit)
+		data, _ := proto.Marshal(bit)
 
-		n, err := fmt.Fprintf(conn, "%s%s", string(buf), string(payload))
+		n, err := fmt.Fprintf(conn, "%s%s", string(buf), string(data))
 
 		if err != nil {
 			writer.WriteHeader(http.StatusInternalServerError)
 			_, _ = writer.Write([]byte(fmt.Sprintf(`{"n":%d,"err":"%s"}`, n, err)))
 		} else {
 			writer.WriteHeader(http.StatusOK)
-			_, _ = writer.Write([]byte(`{"n":%d,"err":null}`))
+			_, _ = writer.Write([]byte(fmt.Sprintf(`{"n":%d,"err":null}`, n)))
 		}
 	})
 
@@ -103,9 +103,9 @@ func main() {
 			Ttl: 120,
 		}
 
-		payload, _ := proto.Marshal(bit)
+		data, _ := proto.Marshal(bit)
 
-		if _, err := fmt.Fprintf(conn, "%s%s", string(buf), string(payload)); err != nil {
+		if _, err := fmt.Fprintf(conn, "%s%s", string(buf), string(data)); err != nil {
 			log.Fatalf("unable to send initial ready bit", zap.Error(err))
 		}
 	}()
@@ -118,9 +118,9 @@ func main() {
 			Ttl: 120,
 		}
 
-		payload, _ := proto.Marshal(bit)
+		data, _ := proto.Marshal(bit)
 
-		if _, err := fmt.Fprintf(conn, "%s%s", string(buf), string(payload)); err != nil {
+		if _, err := fmt.Fprintf(conn, "%s%s", string(buf), string(data)); err != nil {
 			log.Fatalf("unable to send initial health bit", zap.Error(err))
 		}
 	}()
