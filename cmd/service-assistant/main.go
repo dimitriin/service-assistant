@@ -7,13 +7,13 @@ import (
 	"os"
 	"os/signal"
 	"strings"
-	"sync/atomic"
 	"syscall"
+
+	"github.com/dimitriin/service-assistant/pkg/probe"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/dimitriin/service-assistant/pkg/config"
-	"github.com/dimitriin/service-assistant/pkg/handler"
 	"github.com/dimitriin/service-assistant/pkg/metrics"
 	"github.com/dimitriin/service-assistant/pkg/protocol"
 	"github.com/gorilla/mux"
@@ -21,9 +21,6 @@ import (
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 )
-
-var rdz atomic.Value
-var hlz atomic.Value
 
 func main() {
 	logger, _ := zap.NewProduction()
@@ -34,7 +31,11 @@ func main() {
 
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
+
 	viper.AddConfigPath(".")
+	viper.AddConfigPath("$HOME/.service-assistant/config")
+	viper.AddConfigPath("/etc/service-assistant/config")
+
 	viper.AutomaticEnv()
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
@@ -71,13 +72,21 @@ func main() {
 		logger.Fatal("listen error", zap.Error(err))
 	}
 
+	rdzHandler := probe.NewHandler()
+	rdzHandler.StartTimeBit()
+
+	hlzHandler := probe.NewHandler()
+	hlzHandler.StartTimeBit()
+
 	processor := protocol.NewPacketStreamProcessor(
 		pc,
 		protocol.NewDecoder(),
-		handler.NewAggregateCmdHandler(
-			handler.NewCounterIncHandler(registry),
-			handler.NewCounterAddHandler(registry),
-		),
+		protocol.NewPacketHandler(map[uint16]protocol.HandlerInterface{
+			protocol.ReadyzBitType:     rdzHandler,
+			protocol.HealthzBitType:    hlzHandler,
+			protocol.CounterIncCmdType: metrics.NewCounterIncHandler(registry),
+			protocol.CounterAddCMDType: metrics.NewCounterAddHandler(registry),
+		}),
 		zap.NewNop(),
 	)
 
@@ -90,45 +99,10 @@ func main() {
 		errCh <- processor.Process()
 	}()
 
-	rdz.Store(true)
-	hlz.Store(true)
-
 	r := mux.NewRouter()
 	r.Path("/metrics").Handler(promhttp.Handler())
-	r.Path("/readyz").HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
-		v := rdz.Load()
-		ready, _ := v.(bool)
-
-		if ready {
-			writer.WriteHeader(http.StatusOK)
-			_, _ = writer.Write([]byte(`{"ready":true}`))
-		} else {
-			writer.WriteHeader(http.StatusInternalServerError)
-			_, _ = writer.Write([]byte(`{"ready":false}`))
-		}
-	})
-	r.Path("/healthz").HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
-		v := hlz.Load()
-		health, _ := v.(bool)
-
-		if health {
-			writer.WriteHeader(http.StatusOK)
-			_, _ = writer.Write([]byte(`{"health":true}`))
-		} else {
-			writer.WriteHeader(http.StatusInternalServerError)
-			_, _ = writer.Write([]byte(`{"health":false}`))
-		}
-	})
-	r.Path("/unhealthz").HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
-		hlz.Store(false)
-		writer.WriteHeader(http.StatusOK)
-		_, _ = writer.Write([]byte(`{"health":false}`))
-	})
-	r.Path("/unreadyz").HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
-		rdz.Store(false)
-		writer.WriteHeader(http.StatusOK)
-		_, _ = writer.Write([]byte(`{"ready":false}`))
-	})
+	r.Path("/readyz").Handler(rdzHandler)
+	r.Path("/healthz").Handler(hlzHandler)
 
 	httpServer := &http.Server{
 		Addr:    cfg.Service.HTTP.Address,
@@ -150,7 +124,7 @@ func main() {
 		}
 
 		if err := pc.Close(); err != nil {
-			log.Error("server stopped with error", zap.Error(err))
+			log.Error("packet conn error", zap.Error(err))
 		}
 	}
 }

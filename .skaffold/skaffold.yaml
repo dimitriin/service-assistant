@@ -1,0 +1,33 @@
+apiVersion: skaffold/v1beta13
+kind: Config
+build:
+deploy:
+profiles:
+  - name: dev
+    build:
+      artifacts:
+        - image: dimitriin/service-assistant
+          context: ../
+          docker:
+            dockerfile: ./.docker/service-assistant/Dockerfile
+            noCache: true
+        - image: dimitriin/assisted-service-example
+          context: ../
+          docker:
+            dockerfile: ./.docker/assisted-service-example/Dockerfile
+            noCache: true
+      tagPolicy:
+        gitCommit:
+          variant: CommitSha
+      local:
+        push: false
+    deploy:
+      helm:
+        releases:
+          - name: service-assistant
+            namespace: service-assistant
+            chartPath: ../.helm/service-assistant
+            values:
+              image.fullname: dimitriin/assisted-service-example
+              assistant.image.fullname: dimitriin/service-assistant
+            remote: true

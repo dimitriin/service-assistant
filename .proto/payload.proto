@@ -10,3 +10,11 @@ message CounterAddCmd {
     map<string, string> labels = 2;
     uint64 value = 3;
 }
+
+message HealthBit {
+    uint64 ttl = 1;
+}
+
+message ReadyBit {
+    uint64 ttl = 1;
+}

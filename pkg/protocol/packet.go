@@ -1,12 +1,14 @@
 package protocol
 
 const (
-	NullType = 0
-	CmdCounterIncType = iota
-	CmdCounterAddType
+	NullType      = 0
+	ReadyzBitType = iota
+	HealthzBitType
+	CounterIncCmdType
+	CounterAddCMDType
 )
 
 type Packet struct {
-	Type uint16
+	Type  uint16
 	Value interface{}
 }
