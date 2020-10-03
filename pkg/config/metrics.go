@@ -1,5 +1,7 @@
 package config
 
 type Metrics struct {
-	Counters []Counter
+	Counters   []Counter
+	Histograms []Histogram
+	Gauges     []Gauge
 }

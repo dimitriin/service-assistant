@@ -37,11 +37,7 @@ func (h *Handler) StartTimeBit() {
 				timer.Stop()
 			case ttl := <-h.bitChan:
 				h.probeValue.Store(true)
-				if ttl == 0 {
-					timer.Stop()
-				} else {
-					timer.Reset(time.Second * time.Duration(ttl))
-				}
+				timer.Reset(time.Second * time.Duration(ttl))
 			}
 		}
 	}()

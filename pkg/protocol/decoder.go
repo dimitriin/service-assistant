@@ -41,10 +41,30 @@ func (d *Decoder) getProtoMessageByType(t uint16) (proto.Message, error) {
 		return &payload.ReadyBit{}, nil
 	case HealthzBitType:
 		return &payload.HealthBit{}, nil
+	case CounterRegisterCmdType:
+		return &payload.CounterRegisterCmd{}, nil
 	case CounterIncCmdType:
 		return &payload.CounterIncCmd{}, nil
 	case CounterAddCMDType:
 		return &payload.CounterAddCmd{}, nil
+	case HistogramRegisterCmdType:
+		return &payload.HistogramRegisterCmd{}, nil
+	case HistogramObserveCmdType:
+		return &payload.HistogramObserveCmd{}, nil
+	case GaugeRegisterCmdType:
+		return &payload.GaugeRegisterCmd{}, nil
+	case GaugeIncCmdType:
+		return &payload.GaugeIncCmd{}, nil
+	case GaugeDecCmdType:
+		return &payload.GaugeDecCmd{}, nil
+	case GaugeSetCmdType:
+		return &payload.GaugeSetCmd{}, nil
+	case GaugeAddCmdType:
+		return &payload.GaugeAddCmd{}, nil
+	case GaugeSubCmdType:
+		return &payload.GaugeSubCmd{}, nil
+	case GaugeSetToCurrentTimeCmdType:
+		return &payload.GaugeSetToCurrentTimeCmd{}, nil
 	default:
 		return nil, fmt.Errorf("unknown packet type %d", t)
 	}

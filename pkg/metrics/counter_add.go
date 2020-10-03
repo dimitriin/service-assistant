@@ -33,7 +33,7 @@ func (h *CounterAddHandler) Handle(value interface{}) error {
 		return err
 	}
 
-	m.Add(float64(addCmd.Value))
+	m.Add(addCmd.Value)
 
 	return nil
 }

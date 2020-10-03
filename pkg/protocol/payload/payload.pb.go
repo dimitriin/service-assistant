@@ -20,108 +20,6 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type CounterIncCmd struct {
-	Name                 string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Labels               map[string]string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
-	XXX_unrecognized     []byte            `json:"-"`
-	XXX_sizecache        int32             `json:"-"`
-}
-
-func (m *CounterIncCmd) Reset()         { *m = CounterIncCmd{} }
-func (m *CounterIncCmd) String() string { return proto.CompactTextString(m) }
-func (*CounterIncCmd) ProtoMessage()    {}
-func (*CounterIncCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{0}
-}
-
-func (m *CounterIncCmd) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CounterIncCmd.Unmarshal(m, b)
-}
-func (m *CounterIncCmd) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CounterIncCmd.Marshal(b, m, deterministic)
-}
-func (m *CounterIncCmd) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CounterIncCmd.Merge(m, src)
-}
-func (m *CounterIncCmd) XXX_Size() int {
-	return xxx_messageInfo_CounterIncCmd.Size(m)
-}
-func (m *CounterIncCmd) XXX_DiscardUnknown() {
-	xxx_messageInfo_CounterIncCmd.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CounterIncCmd proto.InternalMessageInfo
-
-func (m *CounterIncCmd) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *CounterIncCmd) GetLabels() map[string]string {
-	if m != nil {
-		return m.Labels
-	}
-	return nil
-}
-
-type CounterAddCmd struct {
-	Name                 string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Labels               map[string]string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	Value                uint64            `protobuf:"varint,3,opt,name=value,proto3" json:"value,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
-	XXX_unrecognized     []byte            `json:"-"`
-	XXX_sizecache        int32             `json:"-"`
-}
-
-func (m *CounterAddCmd) Reset()         { *m = CounterAddCmd{} }
-func (m *CounterAddCmd) String() string { return proto.CompactTextString(m) }
-func (*CounterAddCmd) ProtoMessage()    {}
-func (*CounterAddCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{1}
-}
-
-func (m *CounterAddCmd) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CounterAddCmd.Unmarshal(m, b)
-}
-func (m *CounterAddCmd) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CounterAddCmd.Marshal(b, m, deterministic)
-}
-func (m *CounterAddCmd) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CounterAddCmd.Merge(m, src)
-}
-func (m *CounterAddCmd) XXX_Size() int {
-	return xxx_messageInfo_CounterAddCmd.Size(m)
-}
-func (m *CounterAddCmd) XXX_DiscardUnknown() {
-	xxx_messageInfo_CounterAddCmd.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CounterAddCmd proto.InternalMessageInfo
-
-func (m *CounterAddCmd) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *CounterAddCmd) GetLabels() map[string]string {
-	if m != nil {
-		return m.Labels
-	}
-	return nil
-}
-
-func (m *CounterAddCmd) GetValue() uint64 {
-	if m != nil {
-		return m.Value
-	}
-	return 0
-}
-
 type HealthBit struct {
 	Ttl                  uint64   `protobuf:"varint,1,opt,name=ttl,proto3" json:"ttl,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -133,7 +31,7 @@ func (m *HealthBit) Reset()         { *m = HealthBit{} }
 func (m *HealthBit) String() string { return proto.CompactTextString(m) }
 func (*HealthBit) ProtoMessage()    {}
 func (*HealthBit) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{2}
+	return fileDescriptor_678c914f1bee6d56, []int{0}
 }
 
 func (m *HealthBit) XXX_Unmarshal(b []byte) error {
@@ -172,7 +70,7 @@ func (m *ReadyBit) Reset()         { *m = ReadyBit{} }
 func (m *ReadyBit) String() string { return proto.CompactTextString(m) }
 func (*ReadyBit) ProtoMessage()    {}
 func (*ReadyBit) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{3}
+	return fileDescriptor_678c914f1bee6d56, []int{1}
 }
 
 func (m *ReadyBit) XXX_Unmarshal(b []byte) error {
@@ -200,30 +98,696 @@ func (m *ReadyBit) GetTtl() uint64 {
 	return 0
 }
 
+type CounterRegisterCmd struct {
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Help                 string   `protobuf:"bytes,2,opt,name=help,proto3" json:"help,omitempty"`
+	Labels               []string `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CounterRegisterCmd) Reset()         { *m = CounterRegisterCmd{} }
+func (m *CounterRegisterCmd) String() string { return proto.CompactTextString(m) }
+func (*CounterRegisterCmd) ProtoMessage()    {}
+func (*CounterRegisterCmd) Descriptor() ([]byte, []int) {
+	return fileDescriptor_678c914f1bee6d56, []int{2}
+}
+
+func (m *CounterRegisterCmd) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CounterRegisterCmd.Unmarshal(m, b)
+}
+func (m *CounterRegisterCmd) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CounterRegisterCmd.Marshal(b, m, deterministic)
+}
+func (m *CounterRegisterCmd) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CounterRegisterCmd.Merge(m, src)
+}
+func (m *CounterRegisterCmd) XXX_Size() int {
+	return xxx_messageInfo_CounterRegisterCmd.Size(m)
+}
+func (m *CounterRegisterCmd) XXX_DiscardUnknown() {
+	xxx_messageInfo_CounterRegisterCmd.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CounterRegisterCmd proto.InternalMessageInfo
+
+func (m *CounterRegisterCmd) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *CounterRegisterCmd) GetHelp() string {
+	if m != nil {
+		return m.Help
+	}
+	return ""
+}
+
+func (m *CounterRegisterCmd) GetLabels() []string {
+	if m != nil {
+		return m.Labels
+	}
+	return nil
+}
+
+type CounterIncCmd struct {
+	Name                 string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Labels               map[string]string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *CounterIncCmd) Reset()         { *m = CounterIncCmd{} }
+func (m *CounterIncCmd) String() string { return proto.CompactTextString(m) }
+func (*CounterIncCmd) ProtoMessage()    {}
+func (*CounterIncCmd) Descriptor() ([]byte, []int) {
+	return fileDescriptor_678c914f1bee6d56, []int{3}
+}
+
+func (m *CounterIncCmd) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CounterIncCmd.Unmarshal(m, b)
+}
+func (m *CounterIncCmd) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CounterIncCmd.Marshal(b, m, deterministic)
+}
+func (m *CounterIncCmd) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CounterIncCmd.Merge(m, src)
+}
+func (m *CounterIncCmd) XXX_Size() int {
+	return xxx_messageInfo_CounterIncCmd.Size(m)
+}
+func (m *CounterIncCmd) XXX_DiscardUnknown() {
+	xxx_messageInfo_CounterIncCmd.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CounterIncCmd proto.InternalMessageInfo
+
+func (m *CounterIncCmd) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *CounterIncCmd) GetLabels() map[string]string {
+	if m != nil {
+		return m.Labels
+	}
+	return nil
+}
+
+type CounterAddCmd struct {
+	Name                 string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Labels               map[string]string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Value                float64           `protobuf:"fixed64,3,opt,name=value,proto3" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *CounterAddCmd) Reset()         { *m = CounterAddCmd{} }
+func (m *CounterAddCmd) String() string { return proto.CompactTextString(m) }
+func (*CounterAddCmd) ProtoMessage()    {}
+func (*CounterAddCmd) Descriptor() ([]byte, []int) {
+	return fileDescriptor_678c914f1bee6d56, []int{4}
+}
+
+func (m *CounterAddCmd) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CounterAddCmd.Unmarshal(m, b)
+}
+func (m *CounterAddCmd) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CounterAddCmd.Marshal(b, m, deterministic)
+}
+func (m *CounterAddCmd) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CounterAddCmd.Merge(m, src)
+}
+func (m *CounterAddCmd) XXX_Size() int {
+	return xxx_messageInfo_CounterAddCmd.Size(m)
+}
+func (m *CounterAddCmd) XXX_DiscardUnknown() {
+	xxx_messageInfo_CounterAddCmd.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CounterAddCmd proto.InternalMessageInfo
+
+func (m *CounterAddCmd) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *CounterAddCmd) GetLabels() map[string]string {
+	if m != nil {
+		return m.Labels
+	}
+	return nil
+}
+
+func (m *CounterAddCmd) GetValue() float64 {
+	if m != nil {
+		return m.Value
+	}
+	return 0
+}
+
+type HistogramRegisterCmd struct {
+	Name                 string    `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Help                 string    `protobuf:"bytes,2,opt,name=help,proto3" json:"help,omitempty"`
+	Labels               []string  `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty"`
+	Buckets              []float64 `protobuf:"fixed64,4,rep,packed,name=buckets,proto3" json:"buckets,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *HistogramRegisterCmd) Reset()         { *m = HistogramRegisterCmd{} }
+func (m *HistogramRegisterCmd) String() string { return proto.CompactTextString(m) }
+func (*HistogramRegisterCmd) ProtoMessage()    {}
+func (*HistogramRegisterCmd) Descriptor() ([]byte, []int) {
+	return fileDescriptor_678c914f1bee6d56, []int{5}
+}
+
+func (m *HistogramRegisterCmd) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_HistogramRegisterCmd.Unmarshal(m, b)
+}
+func (m *HistogramRegisterCmd) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_HistogramRegisterCmd.Marshal(b, m, deterministic)
+}
+func (m *HistogramRegisterCmd) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_HistogramRegisterCmd.Merge(m, src)
+}
+func (m *HistogramRegisterCmd) XXX_Size() int {
+	return xxx_messageInfo_HistogramRegisterCmd.Size(m)
+}
+func (m *HistogramRegisterCmd) XXX_DiscardUnknown() {
+	xxx_messageInfo_HistogramRegisterCmd.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_HistogramRegisterCmd proto.InternalMessageInfo
+
+func (m *HistogramRegisterCmd) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *HistogramRegisterCmd) GetHelp() string {
+	if m != nil {
+		return m.Help
+	}
+	return ""
+}
+
+func (m *HistogramRegisterCmd) GetLabels() []string {
+	if m != nil {
+		return m.Labels
+	}
+	return nil
+}
+
+func (m *HistogramRegisterCmd) GetBuckets() []float64 {
+	if m != nil {
+		return m.Buckets
+	}
+	return nil
+}
+
+type HistogramObserveCmd struct {
+	Name                 string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Labels               map[string]string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Value                float64           `protobuf:"fixed64,3,opt,name=value,proto3" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *HistogramObserveCmd) Reset()         { *m = HistogramObserveCmd{} }
+func (m *HistogramObserveCmd) String() string { return proto.CompactTextString(m) }
+func (*HistogramObserveCmd) ProtoMessage()    {}
+func (*HistogramObserveCmd) Descriptor() ([]byte, []int) {
+	return fileDescriptor_678c914f1bee6d56, []int{6}
+}
+
+func (m *HistogramObserveCmd) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_HistogramObserveCmd.Unmarshal(m, b)
+}
+func (m *HistogramObserveCmd) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_HistogramObserveCmd.Marshal(b, m, deterministic)
+}
+func (m *HistogramObserveCmd) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_HistogramObserveCmd.Merge(m, src)
+}
+func (m *HistogramObserveCmd) XXX_Size() int {
+	return xxx_messageInfo_HistogramObserveCmd.Size(m)
+}
+func (m *HistogramObserveCmd) XXX_DiscardUnknown() {
+	xxx_messageInfo_HistogramObserveCmd.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_HistogramObserveCmd proto.InternalMessageInfo
+
+func (m *HistogramObserveCmd) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *HistogramObserveCmd) GetLabels() map[string]string {
+	if m != nil {
+		return m.Labels
+	}
+	return nil
+}
+
+func (m *HistogramObserveCmd) GetValue() float64 {
+	if m != nil {
+		return m.Value
+	}
+	return 0
+}
+
+type GaugeRegisterCmd struct {
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Help                 string   `protobuf:"bytes,2,opt,name=help,proto3" json:"help,omitempty"`
+	Labels               []string `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GaugeRegisterCmd) Reset()         { *m = GaugeRegisterCmd{} }
+func (m *GaugeRegisterCmd) String() string { return proto.CompactTextString(m) }
+func (*GaugeRegisterCmd) ProtoMessage()    {}
+func (*GaugeRegisterCmd) Descriptor() ([]byte, []int) {
+	return fileDescriptor_678c914f1bee6d56, []int{7}
+}
+
+func (m *GaugeRegisterCmd) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GaugeRegisterCmd.Unmarshal(m, b)
+}
+func (m *GaugeRegisterCmd) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GaugeRegisterCmd.Marshal(b, m, deterministic)
+}
+func (m *GaugeRegisterCmd) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GaugeRegisterCmd.Merge(m, src)
+}
+func (m *GaugeRegisterCmd) XXX_Size() int {
+	return xxx_messageInfo_GaugeRegisterCmd.Size(m)
+}
+func (m *GaugeRegisterCmd) XXX_DiscardUnknown() {
+	xxx_messageInfo_GaugeRegisterCmd.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GaugeRegisterCmd proto.InternalMessageInfo
+
+func (m *GaugeRegisterCmd) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *GaugeRegisterCmd) GetHelp() string {
+	if m != nil {
+		return m.Help
+	}
+	return ""
+}
+
+func (m *GaugeRegisterCmd) GetLabels() []string {
+	if m != nil {
+		return m.Labels
+	}
+	return nil
+}
+
+type GaugeIncCmd struct {
+	Name                 string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Labels               map[string]string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *GaugeIncCmd) Reset()         { *m = GaugeIncCmd{} }
+func (m *GaugeIncCmd) String() string { return proto.CompactTextString(m) }
+func (*GaugeIncCmd) ProtoMessage()    {}
+func (*GaugeIncCmd) Descriptor() ([]byte, []int) {
+	return fileDescriptor_678c914f1bee6d56, []int{8}
+}
+
+func (m *GaugeIncCmd) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GaugeIncCmd.Unmarshal(m, b)
+}
+func (m *GaugeIncCmd) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GaugeIncCmd.Marshal(b, m, deterministic)
+}
+func (m *GaugeIncCmd) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GaugeIncCmd.Merge(m, src)
+}
+func (m *GaugeIncCmd) XXX_Size() int {
+	return xxx_messageInfo_GaugeIncCmd.Size(m)
+}
+func (m *GaugeIncCmd) XXX_DiscardUnknown() {
+	xxx_messageInfo_GaugeIncCmd.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GaugeIncCmd proto.InternalMessageInfo
+
+func (m *GaugeIncCmd) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *GaugeIncCmd) GetLabels() map[string]string {
+	if m != nil {
+		return m.Labels
+	}
+	return nil
+}
+
+type GaugeDecCmd struct {
+	Name                 string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Labels               map[string]string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *GaugeDecCmd) Reset()         { *m = GaugeDecCmd{} }
+func (m *GaugeDecCmd) String() string { return proto.CompactTextString(m) }
+func (*GaugeDecCmd) ProtoMessage()    {}
+func (*GaugeDecCmd) Descriptor() ([]byte, []int) {
+	return fileDescriptor_678c914f1bee6d56, []int{9}
+}
+
+func (m *GaugeDecCmd) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GaugeDecCmd.Unmarshal(m, b)
+}
+func (m *GaugeDecCmd) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GaugeDecCmd.Marshal(b, m, deterministic)
+}
+func (m *GaugeDecCmd) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GaugeDecCmd.Merge(m, src)
+}
+func (m *GaugeDecCmd) XXX_Size() int {
+	return xxx_messageInfo_GaugeDecCmd.Size(m)
+}
+func (m *GaugeDecCmd) XXX_DiscardUnknown() {
+	xxx_messageInfo_GaugeDecCmd.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GaugeDecCmd proto.InternalMessageInfo
+
+func (m *GaugeDecCmd) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *GaugeDecCmd) GetLabels() map[string]string {
+	if m != nil {
+		return m.Labels
+	}
+	return nil
+}
+
+type GaugeSetCmd struct {
+	Name                 string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Labels               map[string]string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Value                float64           `protobuf:"fixed64,3,opt,name=value,proto3" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *GaugeSetCmd) Reset()         { *m = GaugeSetCmd{} }
+func (m *GaugeSetCmd) String() string { return proto.CompactTextString(m) }
+func (*GaugeSetCmd) ProtoMessage()    {}
+func (*GaugeSetCmd) Descriptor() ([]byte, []int) {
+	return fileDescriptor_678c914f1bee6d56, []int{10}
+}
+
+func (m *GaugeSetCmd) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GaugeSetCmd.Unmarshal(m, b)
+}
+func (m *GaugeSetCmd) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GaugeSetCmd.Marshal(b, m, deterministic)
+}
+func (m *GaugeSetCmd) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GaugeSetCmd.Merge(m, src)
+}
+func (m *GaugeSetCmd) XXX_Size() int {
+	return xxx_messageInfo_GaugeSetCmd.Size(m)
+}
+func (m *GaugeSetCmd) XXX_DiscardUnknown() {
+	xxx_messageInfo_GaugeSetCmd.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GaugeSetCmd proto.InternalMessageInfo
+
+func (m *GaugeSetCmd) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *GaugeSetCmd) GetLabels() map[string]string {
+	if m != nil {
+		return m.Labels
+	}
+	return nil
+}
+
+func (m *GaugeSetCmd) GetValue() float64 {
+	if m != nil {
+		return m.Value
+	}
+	return 0
+}
+
+type GaugeAddCmd struct {
+	Name                 string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Labels               map[string]string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Value                float64           `protobuf:"fixed64,3,opt,name=value,proto3" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *GaugeAddCmd) Reset()         { *m = GaugeAddCmd{} }
+func (m *GaugeAddCmd) String() string { return proto.CompactTextString(m) }
+func (*GaugeAddCmd) ProtoMessage()    {}
+func (*GaugeAddCmd) Descriptor() ([]byte, []int) {
+	return fileDescriptor_678c914f1bee6d56, []int{11}
+}
+
+func (m *GaugeAddCmd) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GaugeAddCmd.Unmarshal(m, b)
+}
+func (m *GaugeAddCmd) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GaugeAddCmd.Marshal(b, m, deterministic)
+}
+func (m *GaugeAddCmd) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GaugeAddCmd.Merge(m, src)
+}
+func (m *GaugeAddCmd) XXX_Size() int {
+	return xxx_messageInfo_GaugeAddCmd.Size(m)
+}
+func (m *GaugeAddCmd) XXX_DiscardUnknown() {
+	xxx_messageInfo_GaugeAddCmd.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GaugeAddCmd proto.InternalMessageInfo
+
+func (m *GaugeAddCmd) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *GaugeAddCmd) GetLabels() map[string]string {
+	if m != nil {
+		return m.Labels
+	}
+	return nil
+}
+
+func (m *GaugeAddCmd) GetValue() float64 {
+	if m != nil {
+		return m.Value
+	}
+	return 0
+}
+
+type GaugeSubCmd struct {
+	Name                 string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Labels               map[string]string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Value                float64           `protobuf:"fixed64,3,opt,name=value,proto3" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *GaugeSubCmd) Reset()         { *m = GaugeSubCmd{} }
+func (m *GaugeSubCmd) String() string { return proto.CompactTextString(m) }
+func (*GaugeSubCmd) ProtoMessage()    {}
+func (*GaugeSubCmd) Descriptor() ([]byte, []int) {
+	return fileDescriptor_678c914f1bee6d56, []int{12}
+}
+
+func (m *GaugeSubCmd) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GaugeSubCmd.Unmarshal(m, b)
+}
+func (m *GaugeSubCmd) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GaugeSubCmd.Marshal(b, m, deterministic)
+}
+func (m *GaugeSubCmd) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GaugeSubCmd.Merge(m, src)
+}
+func (m *GaugeSubCmd) XXX_Size() int {
+	return xxx_messageInfo_GaugeSubCmd.Size(m)
+}
+func (m *GaugeSubCmd) XXX_DiscardUnknown() {
+	xxx_messageInfo_GaugeSubCmd.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GaugeSubCmd proto.InternalMessageInfo
+
+func (m *GaugeSubCmd) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *GaugeSubCmd) GetLabels() map[string]string {
+	if m != nil {
+		return m.Labels
+	}
+	return nil
+}
+
+func (m *GaugeSubCmd) GetValue() float64 {
+	if m != nil {
+		return m.Value
+	}
+	return 0
+}
+
+type GaugeSetToCurrentTimeCmd struct {
+	Name                 string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Labels               map[string]string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *GaugeSetToCurrentTimeCmd) Reset()         { *m = GaugeSetToCurrentTimeCmd{} }
+func (m *GaugeSetToCurrentTimeCmd) String() string { return proto.CompactTextString(m) }
+func (*GaugeSetToCurrentTimeCmd) ProtoMessage()    {}
+func (*GaugeSetToCurrentTimeCmd) Descriptor() ([]byte, []int) {
+	return fileDescriptor_678c914f1bee6d56, []int{13}
+}
+
+func (m *GaugeSetToCurrentTimeCmd) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GaugeSetToCurrentTimeCmd.Unmarshal(m, b)
+}
+func (m *GaugeSetToCurrentTimeCmd) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GaugeSetToCurrentTimeCmd.Marshal(b, m, deterministic)
+}
+func (m *GaugeSetToCurrentTimeCmd) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GaugeSetToCurrentTimeCmd.Merge(m, src)
+}
+func (m *GaugeSetToCurrentTimeCmd) XXX_Size() int {
+	return xxx_messageInfo_GaugeSetToCurrentTimeCmd.Size(m)
+}
+func (m *GaugeSetToCurrentTimeCmd) XXX_DiscardUnknown() {
+	xxx_messageInfo_GaugeSetToCurrentTimeCmd.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GaugeSetToCurrentTimeCmd proto.InternalMessageInfo
+
+func (m *GaugeSetToCurrentTimeCmd) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *GaugeSetToCurrentTimeCmd) GetLabels() map[string]string {
+	if m != nil {
+		return m.Labels
+	}
+	return nil
+}
+
 func init() {
+	proto.RegisterType((*HealthBit)(nil), "HealthBit")
+	proto.RegisterType((*ReadyBit)(nil), "ReadyBit")
+	proto.RegisterType((*CounterRegisterCmd)(nil), "CounterRegisterCmd")
 	proto.RegisterType((*CounterIncCmd)(nil), "CounterIncCmd")
 	proto.RegisterMapType((map[string]string)(nil), "CounterIncCmd.LabelsEntry")
 	proto.RegisterType((*CounterAddCmd)(nil), "CounterAddCmd")
 	proto.RegisterMapType((map[string]string)(nil), "CounterAddCmd.LabelsEntry")
-	proto.RegisterType((*HealthBit)(nil), "HealthBit")
-	proto.RegisterType((*ReadyBit)(nil), "ReadyBit")
+	proto.RegisterType((*HistogramRegisterCmd)(nil), "HistogramRegisterCmd")
+	proto.RegisterType((*HistogramObserveCmd)(nil), "HistogramObserveCmd")
+	proto.RegisterMapType((map[string]string)(nil), "HistogramObserveCmd.LabelsEntry")
+	proto.RegisterType((*GaugeRegisterCmd)(nil), "GaugeRegisterCmd")
+	proto.RegisterType((*GaugeIncCmd)(nil), "GaugeIncCmd")
+	proto.RegisterMapType((map[string]string)(nil), "GaugeIncCmd.LabelsEntry")
+	proto.RegisterType((*GaugeDecCmd)(nil), "GaugeDecCmd")
+	proto.RegisterMapType((map[string]string)(nil), "GaugeDecCmd.LabelsEntry")
+	proto.RegisterType((*GaugeSetCmd)(nil), "GaugeSetCmd")
+	proto.RegisterMapType((map[string]string)(nil), "GaugeSetCmd.LabelsEntry")
+	proto.RegisterType((*GaugeAddCmd)(nil), "GaugeAddCmd")
+	proto.RegisterMapType((map[string]string)(nil), "GaugeAddCmd.LabelsEntry")
+	proto.RegisterType((*GaugeSubCmd)(nil), "GaugeSubCmd")
+	proto.RegisterMapType((map[string]string)(nil), "GaugeSubCmd.LabelsEntry")
+	proto.RegisterType((*GaugeSetToCurrentTimeCmd)(nil), "GaugeSetToCurrentTimeCmd")
+	proto.RegisterMapType((map[string]string)(nil), "GaugeSetToCurrentTimeCmd.LabelsEntry")
 }
 
 func init() { proto.RegisterFile("payload.proto", fileDescriptor_678c914f1bee6d56) }
 
 var fileDescriptor_678c914f1bee6d56 = []byte{
-	// 208 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2d, 0x48, 0xac, 0xcc,
-	0xc9, 0x4f, 0x4c, 0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x57, 0x9a, 0xc4, 0xc8, 0xc5, 0xeb, 0x9c,
-	0x5f, 0x9a, 0x57, 0x92, 0x5a, 0xe4, 0x99, 0x97, 0xec, 0x9c, 0x9b, 0x22, 0x24, 0xc4, 0xc5, 0x92,
-	0x97, 0x98, 0x9b, 0x2a, 0xc1, 0xa8, 0xc0, 0xa8, 0xc1, 0x19, 0x04, 0x66, 0x0b, 0x19, 0x71, 0xb1,
-	0xe5, 0x24, 0x26, 0xa5, 0xe6, 0x14, 0x4b, 0x30, 0x29, 0x30, 0x6b, 0x70, 0x1b, 0x49, 0xe9, 0xa1,
-	0xe8, 0xd1, 0xf3, 0x01, 0x4b, 0xba, 0xe6, 0x95, 0x14, 0x55, 0x06, 0x41, 0x55, 0x4a, 0x59, 0x72,
-	0x71, 0x23, 0x09, 0x0b, 0x09, 0x70, 0x31, 0x67, 0xa7, 0x56, 0x42, 0x4d, 0x05, 0x31, 0x85, 0x44,
-	0xb8, 0x58, 0xcb, 0x12, 0x73, 0x4a, 0x53, 0x25, 0x98, 0xc0, 0x62, 0x10, 0x8e, 0x15, 0x93, 0x05,
-	0xa3, 0xd2, 0x0a, 0x84, 0xa3, 0x1c, 0x53, 0x52, 0x48, 0x76, 0x14, 0x44, 0x0f, 0x36, 0x47, 0x21,
-	0xec, 0x64, 0x56, 0x60, 0xd4, 0x60, 0x81, 0xda, 0x49, 0x89, 0x53, 0x65, 0xb9, 0x38, 0x3d, 0x52,
-	0x13, 0x73, 0x4a, 0x32, 0x9c, 0x32, 0x4b, 0x40, 0x1a, 0x4b, 0x4a, 0x72, 0xc0, 0x1a, 0x59, 0x82,
-	0x40, 0x4c, 0x25, 0x19, 0x2e, 0x8e, 0xa0, 0xd4, 0xc4, 0x94, 0x4a, 0xac, 0xb2, 0x49, 0x6c, 0xe0,
-	0x38, 0x30, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff, 0xb5, 0x68, 0x52, 0x85, 0x94, 0x01, 0x00, 0x00,
+	// 408 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x95, 0xdd, 0x6a, 0xea, 0x40,
+	0x10, 0xc7, 0x59, 0xe3, 0xf1, 0x1c, 0x47, 0x04, 0xc9, 0x91, 0x43, 0x90, 0x53, 0x08, 0x81, 0x42,
+	0xae, 0x42, 0xb1, 0x37, 0xb6, 0xd0, 0x8b, 0xd6, 0x96, 0x5a, 0x28, 0x14, 0x52, 0x5f, 0x60, 0x63,
+	0x06, 0x0d, 0xe6, 0x8b, 0xcd, 0x46, 0xc8, 0x4b, 0xf4, 0xa2, 0xcf, 0xd0, 0x0b, 0x1f, 0xa0, 0x0f,
+	0x58, 0xf2, 0xa9, 0x15, 0x23, 0x84, 0x86, 0xdc, 0xcd, 0xce, 0xe6, 0x3f, 0xf3, 0xcb, 0xec, 0x7f,
+	0x13, 0xe8, 0xfb, 0x34, 0xb2, 0x3d, 0x6a, 0x6a, 0x3e, 0xf3, 0xb8, 0xa7, 0x9c, 0x41, 0x77, 0x86,
+	0xd4, 0xe6, 0xab, 0x3b, 0x8b, 0x8b, 0x03, 0x10, 0x38, 0xb7, 0x25, 0x22, 0x13, 0xb5, 0xad, 0xc7,
+	0xa1, 0xf2, 0x1f, 0xfe, 0xe8, 0x48, 0xcd, 0xe8, 0xf8, 0xee, 0x1c, 0xc4, 0xa9, 0x17, 0xba, 0x1c,
+	0x99, 0x8e, 0x4b, 0x2b, 0xe0, 0xc8, 0xa6, 0x8e, 0x29, 0x8a, 0xd0, 0x76, 0xa9, 0x83, 0xc9, 0x83,
+	0x5d, 0x3d, 0x89, 0xe3, 0xdc, 0x0a, 0x6d, 0x5f, 0x6a, 0xa5, 0xb9, 0x38, 0x16, 0xff, 0x41, 0xc7,
+	0xa6, 0x06, 0xda, 0x81, 0x24, 0xc8, 0x82, 0xda, 0xd5, 0xb3, 0x95, 0xf2, 0x4e, 0xa0, 0x9f, 0x95,
+	0x7d, 0x72, 0x17, 0x65, 0x15, 0xc7, 0x85, 0xba, 0x25, 0x0b, 0x6a, 0x6f, 0x3c, 0xd2, 0xbe, 0x69,
+	0xb4, 0xe7, 0x64, 0xf3, 0xc1, 0xe5, 0x2c, 0xca, 0x2b, 0x8f, 0xae, 0xa0, 0xb7, 0x97, 0x8e, 0x5f,
+	0x68, 0x8d, 0x51, 0x56, 0x35, 0x0e, 0xc5, 0x21, 0xfc, 0xda, 0x50, 0x3b, 0xc4, 0x8c, 0x33, 0x5d,
+	0x5c, 0xb7, 0x26, 0x44, 0xd9, 0xee, 0xa0, 0x6e, 0x4d, 0xb3, 0x32, 0x54, 0xaa, 0x39, 0x06, 0xb5,
+	0xeb, 0x29, 0xc8, 0x44, 0x25, 0x59, 0xcf, 0x9f, 0xa0, 0xfa, 0x30, 0x9c, 0x59, 0x01, 0xf7, 0x96,
+	0x8c, 0x3a, 0x35, 0x9e, 0x8b, 0x28, 0xc1, 0x6f, 0x23, 0x5c, 0xac, 0x91, 0x07, 0x52, 0x5b, 0x16,
+	0x54, 0xa2, 0xe7, 0x4b, 0xe5, 0x93, 0xc0, 0xdf, 0xa2, 0xe5, 0x8b, 0x11, 0x20, 0xdb, 0x60, 0x59,
+	0xc7, 0xc9, 0xc1, 0x88, 0x64, 0xed, 0x88, 0xb2, 0x99, 0x41, 0xe9, 0x30, 0x78, 0xa4, 0xe1, 0x12,
+	0xeb, 0x34, 0xef, 0x1b, 0x81, 0x5e, 0x52, 0xf4, 0x84, 0x75, 0x2f, 0x0e, 0x46, 0x20, 0x69, 0x7b,
+	0x8a, 0xba, 0x8d, 0x5b, 0x00, 0xdd, 0x63, 0x55, 0xa0, 0x54, 0x51, 0x37, 0xd0, 0x47, 0x0e, 0xf4,
+	0x8a, 0xbc, 0x22, 0x50, 0xaa, 0x68, 0xc6, 0x1c, 0x05, 0xe6, 0x89, 0xeb, 0x5e, 0x82, 0xd9, 0xe4,
+	0x65, 0xdf, 0x4d, 0x33, 0x34, 0xaa, 0x4e, 0x33, 0x51, 0x34, 0x83, 0xb9, 0x25, 0x20, 0xe5, 0x47,
+	0x38, 0xf7, 0xa6, 0x21, 0x63, 0xe8, 0xf2, 0xb9, 0xe5, 0x94, 0x7e, 0x26, 0x6e, 0x0e, 0x98, 0xcf,
+	0xb5, 0x32, 0x79, 0xcd, 0xfe, 0x34, 0x3a, 0xc9, 0x8f, 0xf1, 0xf2, 0x2b, 0x00, 0x00, 0xff, 0xff,
+	0x35, 0xd5, 0x0d, 0x0d, 0x29, 0x07, 0x00, 0x00,
 }

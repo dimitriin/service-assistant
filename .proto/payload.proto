@@ -1,5 +1,19 @@
 syntax = "proto3";
 
+message HealthBit {
+    uint64 ttl = 1;
+}
+
+message ReadyBit {
+    uint64 ttl = 1;
+}
+
+message CounterRegisterCmd {
+    string name = 1;
+    string help = 2;
+    repeated string labels = 3;
+}
+
 message CounterIncCmd {
     string name = 1;
     map<string, string> labels = 2;
@@ -8,13 +22,57 @@ message CounterIncCmd {
 message CounterAddCmd {
     string name = 1;
     map<string, string> labels = 2;
-    uint64 value = 3;
+    double value = 3;
 }
 
-message HealthBit {
-    uint64 ttl = 1;
+message HistogramRegisterCmd {
+    string name = 1;
+    string help = 2;
+    repeated string labels = 3;
+    repeated double buckets = 4;
 }
 
-message ReadyBit {
-    uint64 ttl = 1;
+message HistogramObserveCmd {
+    string name = 1;
+    map<string, string> labels = 2;
+    double value = 3;
+}
+
+message GaugeRegisterCmd {
+    string name = 1;
+    string help = 2;
+    repeated string labels = 3;
+}
+
+message GaugeIncCmd {
+    string name = 1;
+    map<string, string> labels = 2;
+}
+
+message GaugeDecCmd {
+    string name = 1;
+    map<string, string> labels = 2;
+}
+
+message GaugeSetCmd {
+    string name = 1;
+    map<string, string> labels = 2;
+    double value = 3;
+}
+
+message GaugeAddCmd {
+    string name = 1;
+    map<string, string> labels = 2;
+    double value = 3;
+}
+
+message GaugeSubCmd {
+    string name = 1;
+    map<string, string> labels = 2;
+    double value = 3;
+}
+
+message GaugeSetToCurrentTimeCmd {
+    string name = 1;
+    map<string, string> labels = 2;
 }
