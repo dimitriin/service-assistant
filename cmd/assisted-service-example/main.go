@@ -2,15 +2,12 @@ package main
 
 import (
 	"context"
-	"encoding/binary"
 	"fmt"
 	"net"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
-
-	"github.com/dimitriin/service-assistant/pkg/protocol"
 
 	"github.com/dimitriin/service-assistant/pkg/protocol/payload"
 	"github.com/golang/protobuf/proto"
@@ -46,16 +43,16 @@ func main() {
 	r := mux.NewRouter()
 	r.Path("/metrics").Handler(promhttp.Handler())
 	r.Path("/healthzBit").HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
-		buf := make([]byte, 2)
-		binary.LittleEndian.PutUint16(buf, protocol.HealthzBitType)
-
-		bit := &payload.HealthBit{
-			Ttl: 120,
+		packet := &payload.Packet{}
+		packet.Payload = &payload.Packet_HealthBit{
+			HealthBit: &payload.HealthBit{
+				Ttl: 120,
+			},
 		}
 
-		data, _ := proto.Marshal(bit)
+		data, _ := proto.Marshal(packet)
 
-		n, err := fmt.Fprintf(conn, "%s%s", string(buf), string(data))
+		n, err := fmt.Fprintf(conn, "%s", string(data))
 
 		if err != nil {
 			writer.WriteHeader(http.StatusInternalServerError)
@@ -66,16 +63,16 @@ func main() {
 		}
 	})
 	r.Path("/readyzBit").HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
-		buf := make([]byte, 2)
-		binary.LittleEndian.PutUint16(buf, protocol.ReadyzBitType)
-
-		bit := &payload.ReadyBit{
-			Ttl: 120,
+		packet := &payload.Packet{}
+		packet.Payload = &payload.Packet_ReadyBit{
+			ReadyBit: &payload.ReadyBit{
+				Ttl: 120,
+			},
 		}
 
-		data, _ := proto.Marshal(bit)
+		data, _ := proto.Marshal(packet)
 
-		n, err := fmt.Fprintf(conn, "%s%s", string(buf), string(data))
+		n, err := fmt.Fprintf(conn, "%s", string(data))
 
 		if err != nil {
 			writer.WriteHeader(http.StatusInternalServerError)
@@ -96,31 +93,31 @@ func main() {
 	}()
 
 	go func() {
-		buf := make([]byte, 2)
-		binary.LittleEndian.PutUint16(buf, protocol.ReadyzBitType)
-
-		bit := &payload.ReadyBit{
-			Ttl: 120,
+		packet := &payload.Packet{}
+		packet.Payload = &payload.Packet_ReadyBit{
+			ReadyBit: &payload.ReadyBit{
+				Ttl: 120,
+			},
 		}
 
-		data, _ := proto.Marshal(bit)
+		data, _ := proto.Marshal(packet)
 
-		if _, err := fmt.Fprintf(conn, "%s%s", string(buf), string(data)); err != nil {
+		if _, err := fmt.Fprintf(conn, "%s", string(data)); err != nil {
 			log.Fatalf("unable to send initial ready bit", zap.Error(err))
 		}
 	}()
 
 	go func() {
-		buf := make([]byte, 2)
-		binary.LittleEndian.PutUint16(buf, protocol.HealthzBitType)
-
-		bit := &payload.HealthBit{
-			Ttl: 120,
+		packet := &payload.Packet{}
+		packet.Payload = &payload.Packet_HealthBit{
+			HealthBit: &payload.HealthBit{
+				Ttl: 120,
+			},
 		}
 
-		data, _ := proto.Marshal(bit)
+		data, _ := proto.Marshal(packet)
 
-		if _, err := fmt.Fprintf(conn, "%s%s", string(buf), string(data)); err != nil {
+		if _, err := fmt.Fprintf(conn, "%s", string(data)); err != nil {
 			log.Fatalf("unable to send initial health bit", zap.Error(err))
 		}
 	}()

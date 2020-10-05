@@ -20,43 +20,264 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type HealthBit struct {
-	Ttl                  uint64   `protobuf:"varint,1,opt,name=ttl,proto3" json:"ttl,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+type Packet struct {
+	// Types that are valid to be assigned to Payload:
+	//	*Packet_ReadyBit
+	//	*Packet_HealthBit
+	//	*Packet_CounterRegisterCmd
+	//	*Packet_CounterIncCmd
+	//	*Packet_CounterAddCmd
+	//	*Packet_HistogramRegisterCmd
+	//	*Packet_HistogramObserveCmd
+	//	*Packet_GaugeRegisterCmd
+	//	*Packet_GaugeIncCmd
+	//	*Packet_GaugeDecCmd
+	//	*Packet_GaugeSetCmd
+	//	*Packet_GaugeAddCmd
+	//	*Packet_GaugeSubCmd
+	//	*Packet_GaugeSetToCurrentTimeCmd
+	Payload              isPacket_Payload `protobuf_oneof:"Payload"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
-func (m *HealthBit) Reset()         { *m = HealthBit{} }
-func (m *HealthBit) String() string { return proto.CompactTextString(m) }
-func (*HealthBit) ProtoMessage()    {}
-func (*HealthBit) Descriptor() ([]byte, []int) {
+func (m *Packet) Reset()         { *m = Packet{} }
+func (m *Packet) String() string { return proto.CompactTextString(m) }
+func (*Packet) ProtoMessage()    {}
+func (*Packet) Descriptor() ([]byte, []int) {
 	return fileDescriptor_678c914f1bee6d56, []int{0}
 }
 
-func (m *HealthBit) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_HealthBit.Unmarshal(m, b)
+func (m *Packet) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Packet.Unmarshal(m, b)
 }
-func (m *HealthBit) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_HealthBit.Marshal(b, m, deterministic)
+func (m *Packet) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Packet.Marshal(b, m, deterministic)
 }
-func (m *HealthBit) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_HealthBit.Merge(m, src)
+func (m *Packet) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Packet.Merge(m, src)
 }
-func (m *HealthBit) XXX_Size() int {
-	return xxx_messageInfo_HealthBit.Size(m)
+func (m *Packet) XXX_Size() int {
+	return xxx_messageInfo_Packet.Size(m)
 }
-func (m *HealthBit) XXX_DiscardUnknown() {
-	xxx_messageInfo_HealthBit.DiscardUnknown(m)
+func (m *Packet) XXX_DiscardUnknown() {
+	xxx_messageInfo_Packet.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_HealthBit proto.InternalMessageInfo
+var xxx_messageInfo_Packet proto.InternalMessageInfo
 
-func (m *HealthBit) GetTtl() uint64 {
+type isPacket_Payload interface {
+	isPacket_Payload()
+}
+
+type Packet_ReadyBit struct {
+	ReadyBit *ReadyBit `protobuf:"bytes,1,opt,name=readyBit,proto3,oneof"`
+}
+
+type Packet_HealthBit struct {
+	HealthBit *HealthBit `protobuf:"bytes,2,opt,name=healthBit,proto3,oneof"`
+}
+
+type Packet_CounterRegisterCmd struct {
+	CounterRegisterCmd *CounterRegisterCmd `protobuf:"bytes,3,opt,name=counterRegisterCmd,proto3,oneof"`
+}
+
+type Packet_CounterIncCmd struct {
+	CounterIncCmd *CounterIncCmd `protobuf:"bytes,4,opt,name=counterIncCmd,proto3,oneof"`
+}
+
+type Packet_CounterAddCmd struct {
+	CounterAddCmd *CounterAddCmd `protobuf:"bytes,5,opt,name=counterAddCmd,proto3,oneof"`
+}
+
+type Packet_HistogramRegisterCmd struct {
+	HistogramRegisterCmd *HistogramRegisterCmd `protobuf:"bytes,6,opt,name=histogramRegisterCmd,proto3,oneof"`
+}
+
+type Packet_HistogramObserveCmd struct {
+	HistogramObserveCmd *HistogramObserveCmd `protobuf:"bytes,7,opt,name=histogramObserveCmd,proto3,oneof"`
+}
+
+type Packet_GaugeRegisterCmd struct {
+	GaugeRegisterCmd *GaugeRegisterCmd `protobuf:"bytes,8,opt,name=gaugeRegisterCmd,proto3,oneof"`
+}
+
+type Packet_GaugeIncCmd struct {
+	GaugeIncCmd *GaugeIncCmd `protobuf:"bytes,9,opt,name=gaugeIncCmd,proto3,oneof"`
+}
+
+type Packet_GaugeDecCmd struct {
+	GaugeDecCmd *GaugeDecCmd `protobuf:"bytes,10,opt,name=gaugeDecCmd,proto3,oneof"`
+}
+
+type Packet_GaugeSetCmd struct {
+	GaugeSetCmd *GaugeSetCmd `protobuf:"bytes,11,opt,name=gaugeSetCmd,proto3,oneof"`
+}
+
+type Packet_GaugeAddCmd struct {
+	GaugeAddCmd *GaugeAddCmd `protobuf:"bytes,12,opt,name=gaugeAddCmd,proto3,oneof"`
+}
+
+type Packet_GaugeSubCmd struct {
+	GaugeSubCmd *GaugeSubCmd `protobuf:"bytes,13,opt,name=gaugeSubCmd,proto3,oneof"`
+}
+
+type Packet_GaugeSetToCurrentTimeCmd struct {
+	GaugeSetToCurrentTimeCmd *GaugeSetToCurrentTimeCmd `protobuf:"bytes,14,opt,name=gaugeSetToCurrentTimeCmd,proto3,oneof"`
+}
+
+func (*Packet_ReadyBit) isPacket_Payload() {}
+
+func (*Packet_HealthBit) isPacket_Payload() {}
+
+func (*Packet_CounterRegisterCmd) isPacket_Payload() {}
+
+func (*Packet_CounterIncCmd) isPacket_Payload() {}
+
+func (*Packet_CounterAddCmd) isPacket_Payload() {}
+
+func (*Packet_HistogramRegisterCmd) isPacket_Payload() {}
+
+func (*Packet_HistogramObserveCmd) isPacket_Payload() {}
+
+func (*Packet_GaugeRegisterCmd) isPacket_Payload() {}
+
+func (*Packet_GaugeIncCmd) isPacket_Payload() {}
+
+func (*Packet_GaugeDecCmd) isPacket_Payload() {}
+
+func (*Packet_GaugeSetCmd) isPacket_Payload() {}
+
+func (*Packet_GaugeAddCmd) isPacket_Payload() {}
+
+func (*Packet_GaugeSubCmd) isPacket_Payload() {}
+
+func (*Packet_GaugeSetToCurrentTimeCmd) isPacket_Payload() {}
+
+func (m *Packet) GetPayload() isPacket_Payload {
 	if m != nil {
-		return m.Ttl
+		return m.Payload
 	}
-	return 0
+	return nil
+}
+
+func (m *Packet) GetReadyBit() *ReadyBit {
+	if x, ok := m.GetPayload().(*Packet_ReadyBit); ok {
+		return x.ReadyBit
+	}
+	return nil
+}
+
+func (m *Packet) GetHealthBit() *HealthBit {
+	if x, ok := m.GetPayload().(*Packet_HealthBit); ok {
+		return x.HealthBit
+	}
+	return nil
+}
+
+func (m *Packet) GetCounterRegisterCmd() *CounterRegisterCmd {
+	if x, ok := m.GetPayload().(*Packet_CounterRegisterCmd); ok {
+		return x.CounterRegisterCmd
+	}
+	return nil
+}
+
+func (m *Packet) GetCounterIncCmd() *CounterIncCmd {
+	if x, ok := m.GetPayload().(*Packet_CounterIncCmd); ok {
+		return x.CounterIncCmd
+	}
+	return nil
+}
+
+func (m *Packet) GetCounterAddCmd() *CounterAddCmd {
+	if x, ok := m.GetPayload().(*Packet_CounterAddCmd); ok {
+		return x.CounterAddCmd
+	}
+	return nil
+}
+
+func (m *Packet) GetHistogramRegisterCmd() *HistogramRegisterCmd {
+	if x, ok := m.GetPayload().(*Packet_HistogramRegisterCmd); ok {
+		return x.HistogramRegisterCmd
+	}
+	return nil
+}
+
+func (m *Packet) GetHistogramObserveCmd() *HistogramObserveCmd {
+	if x, ok := m.GetPayload().(*Packet_HistogramObserveCmd); ok {
+		return x.HistogramObserveCmd
+	}
+	return nil
+}
+
+func (m *Packet) GetGaugeRegisterCmd() *GaugeRegisterCmd {
+	if x, ok := m.GetPayload().(*Packet_GaugeRegisterCmd); ok {
+		return x.GaugeRegisterCmd
+	}
+	return nil
+}
+
+func (m *Packet) GetGaugeIncCmd() *GaugeIncCmd {
+	if x, ok := m.GetPayload().(*Packet_GaugeIncCmd); ok {
+		return x.GaugeIncCmd
+	}
+	return nil
+}
+
+func (m *Packet) GetGaugeDecCmd() *GaugeDecCmd {
+	if x, ok := m.GetPayload().(*Packet_GaugeDecCmd); ok {
+		return x.GaugeDecCmd
+	}
+	return nil
+}
+
+func (m *Packet) GetGaugeSetCmd() *GaugeSetCmd {
+	if x, ok := m.GetPayload().(*Packet_GaugeSetCmd); ok {
+		return x.GaugeSetCmd
+	}
+	return nil
+}
+
+func (m *Packet) GetGaugeAddCmd() *GaugeAddCmd {
+	if x, ok := m.GetPayload().(*Packet_GaugeAddCmd); ok {
+		return x.GaugeAddCmd
+	}
+	return nil
+}
+
+func (m *Packet) GetGaugeSubCmd() *GaugeSubCmd {
+	if x, ok := m.GetPayload().(*Packet_GaugeSubCmd); ok {
+		return x.GaugeSubCmd
+	}
+	return nil
+}
+
+func (m *Packet) GetGaugeSetToCurrentTimeCmd() *GaugeSetToCurrentTimeCmd {
+	if x, ok := m.GetPayload().(*Packet_GaugeSetToCurrentTimeCmd); ok {
+		return x.GaugeSetToCurrentTimeCmd
+	}
+	return nil
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Packet) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*Packet_ReadyBit)(nil),
+		(*Packet_HealthBit)(nil),
+		(*Packet_CounterRegisterCmd)(nil),
+		(*Packet_CounterIncCmd)(nil),
+		(*Packet_CounterAddCmd)(nil),
+		(*Packet_HistogramRegisterCmd)(nil),
+		(*Packet_HistogramObserveCmd)(nil),
+		(*Packet_GaugeRegisterCmd)(nil),
+		(*Packet_GaugeIncCmd)(nil),
+		(*Packet_GaugeDecCmd)(nil),
+		(*Packet_GaugeSetCmd)(nil),
+		(*Packet_GaugeAddCmd)(nil),
+		(*Packet_GaugeSubCmd)(nil),
+		(*Packet_GaugeSetToCurrentTimeCmd)(nil),
+	}
 }
 
 type ReadyBit struct {
@@ -98,6 +319,45 @@ func (m *ReadyBit) GetTtl() uint64 {
 	return 0
 }
 
+type HealthBit struct {
+	Ttl                  uint64   `protobuf:"varint,1,opt,name=ttl,proto3" json:"ttl,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *HealthBit) Reset()         { *m = HealthBit{} }
+func (m *HealthBit) String() string { return proto.CompactTextString(m) }
+func (*HealthBit) ProtoMessage()    {}
+func (*HealthBit) Descriptor() ([]byte, []int) {
+	return fileDescriptor_678c914f1bee6d56, []int{2}
+}
+
+func (m *HealthBit) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_HealthBit.Unmarshal(m, b)
+}
+func (m *HealthBit) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_HealthBit.Marshal(b, m, deterministic)
+}
+func (m *HealthBit) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_HealthBit.Merge(m, src)
+}
+func (m *HealthBit) XXX_Size() int {
+	return xxx_messageInfo_HealthBit.Size(m)
+}
+func (m *HealthBit) XXX_DiscardUnknown() {
+	xxx_messageInfo_HealthBit.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_HealthBit proto.InternalMessageInfo
+
+func (m *HealthBit) GetTtl() uint64 {
+	if m != nil {
+		return m.Ttl
+	}
+	return 0
+}
+
 type CounterRegisterCmd struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Help                 string   `protobuf:"bytes,2,opt,name=help,proto3" json:"help,omitempty"`
@@ -111,7 +371,7 @@ func (m *CounterRegisterCmd) Reset()         { *m = CounterRegisterCmd{} }
 func (m *CounterRegisterCmd) String() string { return proto.CompactTextString(m) }
 func (*CounterRegisterCmd) ProtoMessage()    {}
 func (*CounterRegisterCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{2}
+	return fileDescriptor_678c914f1bee6d56, []int{3}
 }
 
 func (m *CounterRegisterCmd) XXX_Unmarshal(b []byte) error {
@@ -165,7 +425,7 @@ func (m *CounterIncCmd) Reset()         { *m = CounterIncCmd{} }
 func (m *CounterIncCmd) String() string { return proto.CompactTextString(m) }
 func (*CounterIncCmd) ProtoMessage()    {}
 func (*CounterIncCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{3}
+	return fileDescriptor_678c914f1bee6d56, []int{4}
 }
 
 func (m *CounterIncCmd) XXX_Unmarshal(b []byte) error {
@@ -213,7 +473,7 @@ func (m *CounterAddCmd) Reset()         { *m = CounterAddCmd{} }
 func (m *CounterAddCmd) String() string { return proto.CompactTextString(m) }
 func (*CounterAddCmd) ProtoMessage()    {}
 func (*CounterAddCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{4}
+	return fileDescriptor_678c914f1bee6d56, []int{5}
 }
 
 func (m *CounterAddCmd) XXX_Unmarshal(b []byte) error {
@@ -269,7 +529,7 @@ func (m *HistogramRegisterCmd) Reset()         { *m = HistogramRegisterCmd{} }
 func (m *HistogramRegisterCmd) String() string { return proto.CompactTextString(m) }
 func (*HistogramRegisterCmd) ProtoMessage()    {}
 func (*HistogramRegisterCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{5}
+	return fileDescriptor_678c914f1bee6d56, []int{6}
 }
 
 func (m *HistogramRegisterCmd) XXX_Unmarshal(b []byte) error {
@@ -331,7 +591,7 @@ func (m *HistogramObserveCmd) Reset()         { *m = HistogramObserveCmd{} }
 func (m *HistogramObserveCmd) String() string { return proto.CompactTextString(m) }
 func (*HistogramObserveCmd) ProtoMessage()    {}
 func (*HistogramObserveCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{6}
+	return fileDescriptor_678c914f1bee6d56, []int{7}
 }
 
 func (m *HistogramObserveCmd) XXX_Unmarshal(b []byte) error {
@@ -386,7 +646,7 @@ func (m *GaugeRegisterCmd) Reset()         { *m = GaugeRegisterCmd{} }
 func (m *GaugeRegisterCmd) String() string { return proto.CompactTextString(m) }
 func (*GaugeRegisterCmd) ProtoMessage()    {}
 func (*GaugeRegisterCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{7}
+	return fileDescriptor_678c914f1bee6d56, []int{8}
 }
 
 func (m *GaugeRegisterCmd) XXX_Unmarshal(b []byte) error {
@@ -440,7 +700,7 @@ func (m *GaugeIncCmd) Reset()         { *m = GaugeIncCmd{} }
 func (m *GaugeIncCmd) String() string { return proto.CompactTextString(m) }
 func (*GaugeIncCmd) ProtoMessage()    {}
 func (*GaugeIncCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{8}
+	return fileDescriptor_678c914f1bee6d56, []int{9}
 }
 
 func (m *GaugeIncCmd) XXX_Unmarshal(b []byte) error {
@@ -487,7 +747,7 @@ func (m *GaugeDecCmd) Reset()         { *m = GaugeDecCmd{} }
 func (m *GaugeDecCmd) String() string { return proto.CompactTextString(m) }
 func (*GaugeDecCmd) ProtoMessage()    {}
 func (*GaugeDecCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{9}
+	return fileDescriptor_678c914f1bee6d56, []int{10}
 }
 
 func (m *GaugeDecCmd) XXX_Unmarshal(b []byte) error {
@@ -535,7 +795,7 @@ func (m *GaugeSetCmd) Reset()         { *m = GaugeSetCmd{} }
 func (m *GaugeSetCmd) String() string { return proto.CompactTextString(m) }
 func (*GaugeSetCmd) ProtoMessage()    {}
 func (*GaugeSetCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{10}
+	return fileDescriptor_678c914f1bee6d56, []int{11}
 }
 
 func (m *GaugeSetCmd) XXX_Unmarshal(b []byte) error {
@@ -590,7 +850,7 @@ func (m *GaugeAddCmd) Reset()         { *m = GaugeAddCmd{} }
 func (m *GaugeAddCmd) String() string { return proto.CompactTextString(m) }
 func (*GaugeAddCmd) ProtoMessage()    {}
 func (*GaugeAddCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{11}
+	return fileDescriptor_678c914f1bee6d56, []int{12}
 }
 
 func (m *GaugeAddCmd) XXX_Unmarshal(b []byte) error {
@@ -645,7 +905,7 @@ func (m *GaugeSubCmd) Reset()         { *m = GaugeSubCmd{} }
 func (m *GaugeSubCmd) String() string { return proto.CompactTextString(m) }
 func (*GaugeSubCmd) ProtoMessage()    {}
 func (*GaugeSubCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{12}
+	return fileDescriptor_678c914f1bee6d56, []int{13}
 }
 
 func (m *GaugeSubCmd) XXX_Unmarshal(b []byte) error {
@@ -699,7 +959,7 @@ func (m *GaugeSetToCurrentTimeCmd) Reset()         { *m = GaugeSetToCurrentTimeC
 func (m *GaugeSetToCurrentTimeCmd) String() string { return proto.CompactTextString(m) }
 func (*GaugeSetToCurrentTimeCmd) ProtoMessage()    {}
 func (*GaugeSetToCurrentTimeCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor_678c914f1bee6d56, []int{13}
+	return fileDescriptor_678c914f1bee6d56, []int{14}
 }
 
 func (m *GaugeSetToCurrentTimeCmd) XXX_Unmarshal(b []byte) error {
@@ -735,59 +995,80 @@ func (m *GaugeSetToCurrentTimeCmd) GetLabels() map[string]string {
 }
 
 func init() {
-	proto.RegisterType((*HealthBit)(nil), "HealthBit")
-	proto.RegisterType((*ReadyBit)(nil), "ReadyBit")
-	proto.RegisterType((*CounterRegisterCmd)(nil), "CounterRegisterCmd")
-	proto.RegisterType((*CounterIncCmd)(nil), "CounterIncCmd")
-	proto.RegisterMapType((map[string]string)(nil), "CounterIncCmd.LabelsEntry")
-	proto.RegisterType((*CounterAddCmd)(nil), "CounterAddCmd")
-	proto.RegisterMapType((map[string]string)(nil), "CounterAddCmd.LabelsEntry")
-	proto.RegisterType((*HistogramRegisterCmd)(nil), "HistogramRegisterCmd")
-	proto.RegisterType((*HistogramObserveCmd)(nil), "HistogramObserveCmd")
-	proto.RegisterMapType((map[string]string)(nil), "HistogramObserveCmd.LabelsEntry")
-	proto.RegisterType((*GaugeRegisterCmd)(nil), "GaugeRegisterCmd")
-	proto.RegisterType((*GaugeIncCmd)(nil), "GaugeIncCmd")
-	proto.RegisterMapType((map[string]string)(nil), "GaugeIncCmd.LabelsEntry")
-	proto.RegisterType((*GaugeDecCmd)(nil), "GaugeDecCmd")
-	proto.RegisterMapType((map[string]string)(nil), "GaugeDecCmd.LabelsEntry")
-	proto.RegisterType((*GaugeSetCmd)(nil), "GaugeSetCmd")
-	proto.RegisterMapType((map[string]string)(nil), "GaugeSetCmd.LabelsEntry")
-	proto.RegisterType((*GaugeAddCmd)(nil), "GaugeAddCmd")
-	proto.RegisterMapType((map[string]string)(nil), "GaugeAddCmd.LabelsEntry")
-	proto.RegisterType((*GaugeSubCmd)(nil), "GaugeSubCmd")
-	proto.RegisterMapType((map[string]string)(nil), "GaugeSubCmd.LabelsEntry")
-	proto.RegisterType((*GaugeSetToCurrentTimeCmd)(nil), "GaugeSetToCurrentTimeCmd")
-	proto.RegisterMapType((map[string]string)(nil), "GaugeSetToCurrentTimeCmd.LabelsEntry")
+	proto.RegisterType((*Packet)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.Packet")
+	proto.RegisterType((*ReadyBit)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.ReadyBit")
+	proto.RegisterType((*HealthBit)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.HealthBit")
+	proto.RegisterType((*CounterRegisterCmd)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.CounterRegisterCmd")
+	proto.RegisterType((*CounterIncCmd)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.CounterIncCmd")
+	proto.RegisterMapType((map[string]string)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.CounterIncCmd.LabelsEntry")
+	proto.RegisterType((*CounterAddCmd)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.CounterAddCmd")
+	proto.RegisterMapType((map[string]string)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.CounterAddCmd.LabelsEntry")
+	proto.RegisterType((*HistogramRegisterCmd)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.HistogramRegisterCmd")
+	proto.RegisterType((*HistogramObserveCmd)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.HistogramObserveCmd")
+	proto.RegisterMapType((map[string]string)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.HistogramObserveCmd.LabelsEntry")
+	proto.RegisterType((*GaugeRegisterCmd)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.GaugeRegisterCmd")
+	proto.RegisterType((*GaugeIncCmd)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.GaugeIncCmd")
+	proto.RegisterMapType((map[string]string)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.GaugeIncCmd.LabelsEntry")
+	proto.RegisterType((*GaugeDecCmd)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.GaugeDecCmd")
+	proto.RegisterMapType((map[string]string)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.GaugeDecCmd.LabelsEntry")
+	proto.RegisterType((*GaugeSetCmd)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.GaugeSetCmd")
+	proto.RegisterMapType((map[string]string)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.GaugeSetCmd.LabelsEntry")
+	proto.RegisterType((*GaugeAddCmd)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.GaugeAddCmd")
+	proto.RegisterMapType((map[string]string)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.GaugeAddCmd.LabelsEntry")
+	proto.RegisterType((*GaugeSubCmd)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.GaugeSubCmd")
+	proto.RegisterMapType((map[string]string)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.GaugeSubCmd.LabelsEntry")
+	proto.RegisterType((*GaugeSetToCurrentTimeCmd)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.GaugeSetToCurrentTimeCmd")
+	proto.RegisterMapType((map[string]string)(nil), "Dimitriin.ServiceAssistant.Protocol.Payload.GaugeSetToCurrentTimeCmd.LabelsEntry")
 }
 
 func init() { proto.RegisterFile("payload.proto", fileDescriptor_678c914f1bee6d56) }
 
 var fileDescriptor_678c914f1bee6d56 = []byte{
-	// 408 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x95, 0xdd, 0x6a, 0xea, 0x40,
-	0x10, 0xc7, 0x59, 0xe3, 0xf1, 0x1c, 0x47, 0x04, 0xc9, 0x91, 0x43, 0x90, 0x53, 0x08, 0x81, 0x42,
-	0xae, 0x42, 0xb1, 0x37, 0xb6, 0xd0, 0x8b, 0xd6, 0x96, 0x5a, 0x28, 0x14, 0x52, 0x5f, 0x60, 0x63,
-	0x06, 0x0d, 0xe6, 0x8b, 0xcd, 0x46, 0xc8, 0x4b, 0xf4, 0xa2, 0xcf, 0xd0, 0x0b, 0x1f, 0xa0, 0x0f,
-	0x58, 0xf2, 0xa9, 0x15, 0x23, 0x84, 0x86, 0xdc, 0xcd, 0xce, 0xe6, 0x3f, 0xf3, 0xcb, 0xec, 0x7f,
-	0x13, 0xe8, 0xfb, 0x34, 0xb2, 0x3d, 0x6a, 0x6a, 0x3e, 0xf3, 0xb8, 0xa7, 0x9c, 0x41, 0x77, 0x86,
-	0xd4, 0xe6, 0xab, 0x3b, 0x8b, 0x8b, 0x03, 0x10, 0x38, 0xb7, 0x25, 0x22, 0x13, 0xb5, 0xad, 0xc7,
-	0xa1, 0xf2, 0x1f, 0xfe, 0xe8, 0x48, 0xcd, 0xe8, 0xf8, 0xee, 0x1c, 0xc4, 0xa9, 0x17, 0xba, 0x1c,
-	0x99, 0x8e, 0x4b, 0x2b, 0xe0, 0xc8, 0xa6, 0x8e, 0x29, 0x8a, 0xd0, 0x76, 0xa9, 0x83, 0xc9, 0x83,
-	0x5d, 0x3d, 0x89, 0xe3, 0xdc, 0x0a, 0x6d, 0x5f, 0x6a, 0xa5, 0xb9, 0x38, 0x16, 0xff, 0x41, 0xc7,
-	0xa6, 0x06, 0xda, 0x81, 0x24, 0xc8, 0x82, 0xda, 0xd5, 0xb3, 0x95, 0xf2, 0x4e, 0xa0, 0x9f, 0x95,
-	0x7d, 0x72, 0x17, 0x65, 0x15, 0xc7, 0x85, 0xba, 0x25, 0x0b, 0x6a, 0x6f, 0x3c, 0xd2, 0xbe, 0x69,
-	0xb4, 0xe7, 0x64, 0xf3, 0xc1, 0xe5, 0x2c, 0xca, 0x2b, 0x8f, 0xae, 0xa0, 0xb7, 0x97, 0x8e, 0x5f,
-	0x68, 0x8d, 0x51, 0x56, 0x35, 0x0e, 0xc5, 0x21, 0xfc, 0xda, 0x50, 0x3b, 0xc4, 0x8c, 0x33, 0x5d,
-	0x5c, 0xb7, 0x26, 0x44, 0xd9, 0xee, 0xa0, 0x6e, 0x4d, 0xb3, 0x32, 0x54, 0xaa, 0x39, 0x06, 0xb5,
-	0xeb, 0x29, 0xc8, 0x44, 0x25, 0x59, 0xcf, 0x9f, 0xa0, 0xfa, 0x30, 0x9c, 0x59, 0x01, 0xf7, 0x96,
-	0x8c, 0x3a, 0x35, 0x9e, 0x8b, 0x28, 0xc1, 0x6f, 0x23, 0x5c, 0xac, 0x91, 0x07, 0x52, 0x5b, 0x16,
-	0x54, 0xa2, 0xe7, 0x4b, 0xe5, 0x93, 0xc0, 0xdf, 0xa2, 0xe5, 0x8b, 0x11, 0x20, 0xdb, 0x60, 0x59,
-	0xc7, 0xc9, 0xc1, 0x88, 0x64, 0xed, 0x88, 0xb2, 0x99, 0x41, 0xe9, 0x30, 0x78, 0xa4, 0xe1, 0x12,
-	0xeb, 0x34, 0xef, 0x1b, 0x81, 0x5e, 0x52, 0xf4, 0x84, 0x75, 0x2f, 0x0e, 0x46, 0x20, 0x69, 0x7b,
-	0x8a, 0xba, 0x8d, 0x5b, 0x00, 0xdd, 0x63, 0x55, 0xa0, 0x54, 0x51, 0x37, 0xd0, 0x47, 0x0e, 0xf4,
-	0x8a, 0xbc, 0x22, 0x50, 0xaa, 0x68, 0xc6, 0x1c, 0x05, 0xe6, 0x89, 0xeb, 0x5e, 0x82, 0xd9, 0xe4,
-	0x65, 0xdf, 0x4d, 0x33, 0x34, 0xaa, 0x4e, 0x33, 0x51, 0x34, 0x83, 0xb9, 0x25, 0x20, 0xe5, 0x47,
-	0x38, 0xf7, 0xa6, 0x21, 0x63, 0xe8, 0xf2, 0xb9, 0xe5, 0x94, 0x7e, 0x26, 0x6e, 0x0e, 0x98, 0xcf,
-	0xb5, 0x32, 0x79, 0xcd, 0xfe, 0x34, 0x3a, 0xc9, 0x8f, 0xf1, 0xf2, 0x2b, 0x00, 0x00, 0xff, 0xff,
-	0x35, 0xd5, 0x0d, 0x0d, 0x29, 0x07, 0x00, 0x00,
+	// 721 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x97, 0xcb, 0x6a, 0xdb, 0x40,
+	0x14, 0x86, 0xa5, 0xd8, 0xb1, 0xa3, 0xa3, 0xba, 0x84, 0x49, 0x28, 0xa2, 0xb4, 0x60, 0xbc, 0x32,
+	0x14, 0xb4, 0x48, 0x69, 0x49, 0x03, 0xa5, 0xcd, 0xad, 0x55, 0x21, 0xd0, 0x74, 0x12, 0xba, 0x28,
+	0xa1, 0x20, 0xdb, 0x83, 0x2d, 0x22, 0x4b, 0xae, 0x34, 0x4e, 0xf1, 0xba, 0x8f, 0xd4, 0x5d, 0x17,
+	0x7d, 0x86, 0x2e, 0xf2, 0x00, 0x7d, 0x94, 0x32, 0x17, 0x8d, 0x14, 0x7b, 0x52, 0xb0, 0x7c, 0xd9,
+	0xcd, 0x8c, 0x3d, 0xdf, 0x7f, 0xce, 0xcc, 0xd1, 0x7f, 0x24, 0x68, 0x8c, 0xfc, 0x49, 0x18, 0xfb,
+	0x3d, 0x77, 0x94, 0xc4, 0x34, 0x46, 0xcf, 0x4e, 0x82, 0x61, 0x40, 0x93, 0x20, 0x88, 0xdc, 0x0b,
+	0x92, 0xdc, 0x04, 0x5d, 0x72, 0x98, 0xa6, 0x41, 0x4a, 0xfd, 0x88, 0xba, 0xe7, 0xec, 0x1f, 0xdd,
+	0x38, 0x74, 0xcf, 0xc5, 0x96, 0xd6, 0x4f, 0x1b, 0x6a, 0xe7, 0x7e, 0xf7, 0x9a, 0x50, 0x74, 0x01,
+	0x5b, 0x09, 0xf1, 0x7b, 0x93, 0xa3, 0x80, 0x3a, 0x66, 0xd3, 0x6c, 0xdb, 0x7b, 0x2f, 0xdc, 0x39,
+	0x50, 0x2e, 0x96, 0x9b, 0x3d, 0x03, 0x2b, 0x10, 0xfa, 0x0c, 0xd6, 0x80, 0xf8, 0x21, 0x1d, 0x30,
+	0xea, 0x06, 0xa7, 0xbe, 0x9c, 0x8b, 0xea, 0x65, 0xbb, 0x3d, 0x03, 0xe7, 0x28, 0xf4, 0x0d, 0x50,
+	0x37, 0x1e, 0x47, 0x94, 0x24, 0x98, 0xf4, 0x83, 0x94, 0x92, 0xe4, 0x78, 0xd8, 0x73, 0x2a, 0x5c,
+	0xe0, 0xcd, 0x5c, 0x02, 0xc7, 0x33, 0x18, 0xcf, 0xc0, 0x1a, 0x38, 0xea, 0x40, 0x43, 0xae, 0x7e,
+	0x88, 0xba, 0x4c, 0xad, 0xca, 0xd5, 0x0e, 0xca, 0xa8, 0x09, 0x82, 0x67, 0xe0, 0xbb, 0xc8, 0x82,
+	0xc6, 0x61, 0xaf, 0xc7, 0x34, 0x36, 0xcb, 0x6b, 0x08, 0x42, 0x41, 0x43, 0x2c, 0xa0, 0xef, 0xb0,
+	0x3b, 0x08, 0x52, 0x1a, 0xf7, 0x13, 0x7f, 0x58, 0x3c, 0xbc, 0x1a, 0x97, 0x3a, 0x9c, 0xef, 0x76,
+	0x34, 0x20, 0xcf, 0xc0, 0x5a, 0x01, 0x44, 0x61, 0x47, 0xad, 0x7f, 0xec, 0xa4, 0x24, 0xb9, 0x21,
+	0x4c, 0xb7, 0xce, 0x75, 0xdf, 0x96, 0xd3, 0xcd, 0x39, 0x9e, 0x81, 0x75, 0x78, 0x74, 0x0d, 0xdb,
+	0x7d, 0x7f, 0xdc, 0x27, 0xc5, 0x54, 0xb7, 0xb8, 0xe4, 0xeb, 0xb9, 0x24, 0xdf, 0x4f, 0x41, 0x3c,
+	0x03, 0xcf, 0x80, 0xd1, 0x15, 0xd8, 0x7c, 0x4d, 0x56, 0x88, 0xc5, 0x75, 0xf6, 0xe7, 0xd7, 0x51,
+	0xf5, 0x51, 0xc4, 0x29, 0xfa, 0x09, 0xe1, 0x74, 0x28, 0x4b, 0x17, 0xfb, 0x15, 0x5d, 0x4c, 0x15,
+	0xfd, 0x82, 0x50, 0x46, 0xb7, 0xcb, 0xd2, 0xc5, 0x7e, 0x45, 0x17, 0x53, 0x45, 0x97, 0x75, 0xfd,
+	0xa0, 0x2c, 0x5d, 0x55, 0x75, 0x11, 0x97, 0xc7, 0x3e, 0xee, 0x30, 0x7a, 0xa3, 0x74, 0xec, 0x7c,
+	0x7f, 0x1e, 0x3b, 0x9f, 0xa2, 0x1f, 0x26, 0x38, 0x59, 0x2e, 0x97, 0xf1, 0xf1, 0x38, 0x49, 0x48,
+	0x44, 0x2f, 0x83, 0x21, 0x2f, 0xdf, 0x87, 0x5c, 0xeb, 0xb4, 0xd4, 0x39, 0x4d, 0xc3, 0x3c, 0x03,
+	0xdf, 0x2b, 0x74, 0x64, 0x41, 0x3d, 0x73, 0xed, 0x27, 0xb0, 0x95, 0xb9, 0x2d, 0xda, 0x86, 0x0a,
+	0xa5, 0x21, 0x77, 0xec, 0x2a, 0x66, 0xc3, 0xd6, 0x53, 0xb0, 0x94, 0x6b, 0x6a, 0x7e, 0xbe, 0x04,
+	0x34, 0xeb, 0x79, 0x08, 0x41, 0x35, 0xf2, 0x87, 0x84, 0xff, 0xd1, 0xc2, 0x7c, 0xcc, 0xd6, 0x06,
+	0x24, 0x1c, 0x71, 0xdf, 0xb6, 0x30, 0x1f, 0xa3, 0x47, 0x50, 0x0b, 0xfd, 0x0e, 0x09, 0x53, 0xa7,
+	0xd2, 0xac, 0xb4, 0x2d, 0x2c, 0x67, 0xad, 0xdf, 0x26, 0x34, 0xee, 0x98, 0x9b, 0x96, 0xf8, 0x55,
+	0xed, 0xde, 0x68, 0x56, 0xda, 0xf6, 0xde, 0xbb, 0xf2, 0xe6, 0xe9, 0x9e, 0x71, 0xd0, 0x69, 0x44,
+	0x93, 0x49, 0x16, 0xc5, 0xe3, 0x57, 0x60, 0x17, 0x96, 0x59, 0xf2, 0xd7, 0x64, 0x22, 0x23, 0x60,
+	0x43, 0xb4, 0x0b, 0x9b, 0x37, 0x7e, 0x38, 0x26, 0x32, 0x27, 0x31, 0x39, 0xd8, 0xd8, 0x37, 0x5b,
+	0xb7, 0x79, 0x02, 0xb2, 0xa8, 0x56, 0x96, 0x80, 0xe0, 0xeb, 0x12, 0xc8, 0xe3, 0x63, 0xad, 0xcc,
+	0x94, 0xf1, 0x2d, 0x92, 0xd6, 0x08, 0x76, 0x75, 0x26, 0xbd, 0xe8, 0x7d, 0x23, 0x07, 0xea, 0x9d,
+	0x31, 0x7b, 0x6f, 0x48, 0x9d, 0x6a, 0xb3, 0xd2, 0x36, 0x71, 0x36, 0x6d, 0xfd, 0x35, 0x61, 0x47,
+	0xe3, 0xcf, 0x5a, 0xc5, 0xde, 0xd4, 0x71, 0x9e, 0x2d, 0xda, 0x05, 0xd6, 0x73, 0xa8, 0x18, 0xb6,
+	0xa7, 0xdb, 0xc1, 0xc2, 0x0f, 0xd0, 0x2f, 0x13, 0xec, 0x82, 0xf7, 0x6b, 0x79, 0x57, 0x53, 0xc7,
+	0x75, 0x52, 0xb6, 0xb3, 0x2c, 0xfb, 0xe1, 0x51, 0xc1, 0xcb, 0x5e, 0xb2, 0xa2, 0xe0, 0x05, 0x7d,
+	0xd9, 0xc1, 0xff, 0xc9, 0x82, 0x97, 0xad, 0x6a, 0x45, 0xc1, 0x0b, 0xfa, 0x7a, 0x0a, 0x54, 0xa5,
+	0xf4, 0x1f, 0x2b, 0x5b, 0x42, 0x4a, 0xeb, 0x34, 0xb2, 0xfc, 0x96, 0x44, 0x53, 0x5e, 0xd5, 0x2d,
+	0x71, 0xfa, 0x7a, 0x52, 0xba, 0x35, 0xc1, 0xb9, 0xef, 0x55, 0x40, 0x9b, 0x5f, 0x30, 0x95, 0xdf,
+	0xa7, 0xa5, 0xbc, 0x75, 0x2c, 0xf9, 0x79, 0x3a, 0xb2, 0xbe, 0xd4, 0xe5, 0x17, 0x69, 0xa7, 0xc6,
+	0x3f, 0x49, 0x9f, 0xff, 0x0b, 0x00, 0x00, 0xff, 0xff, 0x65, 0xa9, 0x8e, 0x8f, 0xa3, 0x0e, 0x00,
+	0x00,
 }

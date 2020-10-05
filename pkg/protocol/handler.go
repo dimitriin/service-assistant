@@ -2,6 +2,9 @@ package protocol
 
 import (
 	"fmt"
+	"reflect"
+
+	"github.com/dimitriin/service-assistant/pkg/protocol/payload"
 )
 
 type HandlerInterface interface {
@@ -9,19 +12,19 @@ type HandlerInterface interface {
 }
 
 type PacketHandler struct {
-	handlers map[uint16]HandlerInterface
+	handlers map[string]HandlerInterface
 }
 
-func NewPacketHandler(handlers map[uint16]HandlerInterface) *PacketHandler {
+func NewPacketHandler(handlers map[string]HandlerInterface) *PacketHandler {
 	return &PacketHandler{handlers: handlers}
 }
 
-func (h *PacketHandler) Handle(packet *Packet) error {
-	handler, ok := h.handlers[packet.Type]
+func (h *PacketHandler) Handle(packet *payload.Packet) error {
+	handler, ok := h.handlers[reflect.TypeOf(packet.Payload).String()]
 
 	if !ok {
-		return fmt.Errorf("unexpected packet type %d", packet.Type)
+		return fmt.Errorf("unexpected packet type %s", reflect.TypeOf(packet.Payload).String())
 	}
 
-	return handler.Handle(packet.Value)
+	return handler.Handle(packet.Payload)
 }

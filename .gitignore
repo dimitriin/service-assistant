@@ -1,7 +1,7 @@
 .DS_Store
 debug
 .vscode/
-.idea/*
-vendor/*
-bin/*
+.idea
+vendor
+bin
 *.iml

@@ -4,23 +4,22 @@ import (
 	"net"
 	"sync"
 
+	"github.com/golang/protobuf/proto"
+
+	"github.com/dimitriin/service-assistant/pkg/protocol/payload"
+
 	"go.uber.org/zap"
 )
 
-type DecoderInterface interface {
-	Decode(buf []byte, p *Packet) error
-}
-
 type PacketStreamProcessor struct {
 	conn    net.PacketConn
-	decoder DecoderInterface
 	handler *PacketHandler
 	logger  *zap.Logger
 	wg      sync.WaitGroup
 }
 
-func NewPacketStreamProcessor(conn net.PacketConn, decoder DecoderInterface, handler *PacketHandler, logger *zap.Logger) *PacketStreamProcessor {
-	return &PacketStreamProcessor{conn: conn, decoder: decoder, handler: handler, logger: logger}
+func NewPacketStreamProcessor(conn net.PacketConn, handler *PacketHandler, logger *zap.Logger) *PacketStreamProcessor {
+	return &PacketStreamProcessor{conn: conn, handler: handler, logger: logger}
 }
 
 func (u *PacketStreamProcessor) Process() error {
@@ -30,9 +29,9 @@ func (u *PacketStreamProcessor) Process() error {
 		n, _, readErr := u.conn.ReadFrom(buf)
 
 		if n > 0 {
-			p := &Packet{}
+			p := &payload.Packet{}
 
-			if err := u.decoder.Decode(buf[:n], p); err != nil {
+			if err := proto.Unmarshal(buf[:n], p); err != nil {
 				u.logger.Error("packet decode error", zap.Binary("buf", buf[:n]), zap.Error(err))
 
 				continue
@@ -40,7 +39,7 @@ func (u *PacketStreamProcessor) Process() error {
 
 			u.wg.Add(1)
 
-			go func(p *Packet) {
+			go func(p *payload.Packet) {
 				defer u.wg.Done()
 
 				if err := u.handler.Handle(p); err != nil {

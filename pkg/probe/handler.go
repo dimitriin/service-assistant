@@ -45,12 +45,12 @@ func (h *Handler) StartTimeBit() {
 
 func (h *Handler) Handle(value interface{}) error {
 	switch value.(type) {
-	case *payload.ReadyBit:
-		bit := value.(*payload.ReadyBit)
-		h.bitChan <- bit.Ttl
-	case *payload.HealthBit:
-		bit := value.(*payload.HealthBit)
-		h.bitChan <- bit.Ttl
+	case *payload.Packet_ReadyBit:
+		bit := value.(*payload.Packet_ReadyBit)
+		h.bitChan <- bit.ReadyBit.Ttl
+	case *payload.Packet_HealthBit:
+		bit := value.(*payload.Packet_HealthBit)
+		h.bitChan <- bit.HealthBit.Ttl
 	default:
 		return errors.New("unexpected probe handler value")
 	}

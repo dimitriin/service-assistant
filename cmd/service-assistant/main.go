@@ -6,8 +6,11 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"reflect"
 	"strings"
 	"syscall"
+
+	"github.com/dimitriin/service-assistant/pkg/protocol/payload"
 
 	"github.com/dimitriin/service-assistant/pkg/probe"
 
@@ -81,22 +84,21 @@ func main() {
 
 	processor := protocol.NewPacketStreamProcessor(
 		pc,
-		protocol.NewDecoder(),
-		protocol.NewPacketHandler(map[uint16]protocol.HandlerInterface{
-			protocol.ReadyzBitType:                rdzHandler,
-			protocol.HealthzBitType:               hlzHandler,
-			protocol.CounterRegisterCmdType:       metrics.NewCounterRegisterHandler(registry),
-			protocol.CounterIncCmdType:            metrics.NewCounterIncHandler(registry),
-			protocol.CounterAddCMDType:            metrics.NewCounterAddHandler(registry),
-			protocol.HistogramRegisterCmdType:     metrics.NewHistogramRegisterHandler(registry),
-			protocol.HistogramObserveCmdType:      metrics.NewHistogramObserveHandler(registry),
-			protocol.GaugeRegisterCmdType:         metrics.NewGaugeRegisterHandler(registry),
-			protocol.GaugeSetToCurrentTimeCmdType: metrics.NewGaugeSetToCurrentTimeHandler(registry),
-			protocol.GaugeAddCmdType:              metrics.NewGaugeAddHandler(registry),
-			protocol.GaugeDecCmdType:              metrics.NewGaugeDecHandler(registry),
-			protocol.GaugeIncCmdType:              metrics.NewGaugeIncHandler(registry),
-			protocol.GaugeSetCmdType:              metrics.NewGaugeSetHandler(registry),
-			protocol.GaugeSubCmdType:              metrics.NewGaugeSubHandler(registry),
+		protocol.NewPacketHandler(map[string]protocol.HandlerInterface{
+			reflect.TypeOf(&payload.Packet_ReadyBit{}).String():                 rdzHandler,
+			reflect.TypeOf(&payload.Packet_HealthBit{}).String():                hlzHandler,
+			reflect.TypeOf(&payload.Packet_CounterRegisterCmd{}).String():       metrics.NewCounterRegisterHandler(registry),
+			reflect.TypeOf(&payload.Packet_CounterIncCmd{}).String():            metrics.NewCounterIncHandler(registry),
+			reflect.TypeOf(&payload.Packet_CounterAddCmd{}).String():            metrics.NewCounterAddHandler(registry),
+			reflect.TypeOf(&payload.Packet_HistogramRegisterCmd{}).String():     metrics.NewHistogramRegisterHandler(registry),
+			reflect.TypeOf(&payload.Packet_HistogramObserveCmd{}).String():      metrics.NewHistogramObserveHandler(registry),
+			reflect.TypeOf(&payload.Packet_GaugeRegisterCmd{}).String():         metrics.NewGaugeRegisterHandler(registry),
+			reflect.TypeOf(&payload.Packet_GaugeSetToCurrentTimeCmd{}).String(): metrics.NewGaugeSetToCurrentTimeHandler(registry),
+			reflect.TypeOf(&payload.Packet_GaugeAddCmd{}).String():              metrics.NewGaugeAddHandler(registry),
+			reflect.TypeOf(&payload.Packet_GaugeDecCmd{}).String():              metrics.NewGaugeDecHandler(registry),
+			reflect.TypeOf(&payload.Packet_GaugeIncCmd{}).String():              metrics.NewGaugeIncHandler(registry),
+			reflect.TypeOf(&payload.Packet_GaugeSetCmd{}).String():              metrics.NewGaugeSetHandler(registry),
+			reflect.TypeOf(&payload.Packet_GaugeSubCmd{}).String():              metrics.NewGaugeSubHandler(registry),
 		}),
 		zap.NewNop(),
 	)
@@ -136,6 +138,10 @@ func main() {
 
 		if err := pc.Close(); err != nil {
 			log.Error("packet conn error", zap.Error(err))
+		}
+
+		if err := syscall.Unlink(cfg.Service.Conn.Address); err != nil {
+			log.Error("unlink socket error", zap.Error(err))
 		}
 	}
 }

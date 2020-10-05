@@ -1,10 +1,33 @@
 syntax = "proto3";
 
-message HealthBit {
-    uint64 ttl = 1;
+package Dimitriin.ServiceAssistant.Protocol.Payload;
+
+option go_package = "payload";
+
+message Packet {
+    oneof Payload {
+        ReadyBit readyBit = 1;
+        HealthBit healthBit = 2;
+        CounterRegisterCmd counterRegisterCmd = 3;
+        CounterIncCmd counterIncCmd = 4;
+        CounterAddCmd counterAddCmd = 5;
+        HistogramRegisterCmd histogramRegisterCmd = 6;
+        HistogramObserveCmd histogramObserveCmd = 7;
+        GaugeRegisterCmd gaugeRegisterCmd= 8;
+        GaugeIncCmd gaugeIncCmd = 9;
+        GaugeDecCmd gaugeDecCmd = 10;
+        GaugeSetCmd gaugeSetCmd = 11;
+        GaugeAddCmd gaugeAddCmd = 12;
+        GaugeSubCmd gaugeSubCmd = 13;
+        GaugeSetToCurrentTimeCmd gaugeSetToCurrentTimeCmd= 14;
+    }
 }
 
 message ReadyBit {
+    uint64 ttl = 1;
+}
+
+message HealthBit {
     uint64 ttl = 1;
 }
 
