@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Dimitriin\Probes;
 
-interface ReadyBitSenderInterface
+interface ReadyBitSenderInterface extends ProbeBitSenderInterface
 {
-    public function send(): void;
 }

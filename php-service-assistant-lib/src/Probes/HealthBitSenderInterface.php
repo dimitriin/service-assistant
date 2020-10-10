@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Dimitriin\Probes;
 
-interface HealthBitSenderInterface
+interface HealthBitSenderInterface extends ProbeBitSenderInterface
 {
-    public function send(?int $ttl = null): void;
 }
