@@ -47,7 +47,13 @@ func main() {
 	viper.SetDefault("service.conn.address", "/var/run/service-assistant/service-assistant.sock")
 
 	if err := viper.ReadInConfig(); err != nil {
-		logger.Fatal("read config file error", zap.Error(err))
+		_, ok := err.(viper.ConfigFileNotFoundError)
+
+		if !ok {
+			logger.Fatal("read config file error", zap.Error(err))
+		}
+
+		logger.Warn("configuration file not found", zap.Error(err))
 	}
 
 	logger.WithOptions()
