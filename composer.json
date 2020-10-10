@@ -1,0 +1,17 @@
+{
+  "name": "dimitriin/php-service-assistant-lib",
+  "require": {
+    "clue/socket-raw": "^1.4",
+    "google/protobuf": "^3.13",
+    "tuleap/prometheus-client": "^1.1"
+  },
+  "autoload":  {
+    "psr-4": {
+      "": "php-service-assistant-lib/gen",
+      "Dimitriin\\": "php-service-assistant-lib/src"
+    }
+  },
+  "archive": {
+    "exclude": ["/.docker", "/.helm", "/.proto", "/.skaffold", "/cmd", "/pkg", "go.mod", "go.sum"]
+  }
+}
