@@ -1,5 +1,15 @@
 {
   "name": "dimitriin/php-service-assistant-lib",
+  "description": "PHP integration library with Service Assistant",
+  "keywords": ["php", "kubernetes", "health", "readiness", "prometheus", "metrics"],
+  "homepage": "https://github.com/dimitriin/service-assistant",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dmitrii Nasedkin",
+      "email": "dimitrii.nasedkin@gmail.com"
+    }
+  ],
   "require": {
     "clue/socket-raw": "^1.4",
     "google/protobuf": "^3.13",
