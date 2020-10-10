@@ -13,7 +13,8 @@
   "require": {
     "clue/socket-raw": "^1.4",
     "google/protobuf": "^3.13",
-    "tuleap/prometheus-client": "^1.1"
+    "tuleap/prometheus-client": "^1.1",
+    "psr/log": "^1.1"
   },
   "autoload":  {
     "psr-4": {
