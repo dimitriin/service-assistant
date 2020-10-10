@@ -70,7 +70,7 @@ final class Registry implements RegistryInterface, RendererInterface
         );
     }
 
-    public function registerHistogram(string $name, string $help, array $labels, array $buckets): void
+    public function registerHistogram(string $name, string $help, array $labels, ?array $buckets = null): void
     {
         $this->assertMetricNotRegistered($name);
 

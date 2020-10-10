@@ -23,9 +23,9 @@ interface RegistryInterface
      * @param string $name
      * @param string $help
      * @param array $labels
-     * @param array $buckets
+     * @param array|null $buckets
      */
-    public function registerHistogram(string $name, string $help, array $labels, array $buckets): void;
+    public function registerHistogram(string $name, string $help, array $labels, ?array $buckets = null): void;
 
     /**
      * @param string $name

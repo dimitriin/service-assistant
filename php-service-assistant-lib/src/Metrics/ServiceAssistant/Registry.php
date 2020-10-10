@@ -68,7 +68,7 @@ final class Registry implements RegistryInterface
         $this->metrics[$name] = new Gauge($this->client, $name);
     }
 
-    public function registerHistogram(string $name, string $help, array $labels, array $buckets): void
+    public function registerHistogram(string $name, string $help, array $labels, ?array $buckets = null): void
     {
         $this->assertMetricNotRegistered($name);
 
@@ -76,7 +76,7 @@ final class Registry implements RegistryInterface
         $cmd->setName($name);
         $cmd->setHelp($help);
         $cmd->setLabels($labels);
-        $cmd->setBuckets($buckets);
+        $cmd->setBuckets($buckets ?? []);
 
         $packet = new Packet();
         $packet->setHistogramRegisterCmd($cmd);
