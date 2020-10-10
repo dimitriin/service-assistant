@@ -15,11 +15,13 @@ func NewGaugeSubHandler(registry *Registry) *GaugeSubHandler {
 }
 
 func (h *GaugeSubHandler) Handle(value interface{}) error {
-	subCmd, ok := value.(*payload.GaugeSubCmd)
+	packetSubCmd, ok := value.(*payload.Packet_GaugeSubCmd)
 
 	if !ok {
 		return errors.New("unexpected value for gauge sub handler")
 	}
+
+	subCmd := packetSubCmd.GaugeSubCmd
 
 	gauge, err := h.registry.GetGauge(subCmd.Name)
 

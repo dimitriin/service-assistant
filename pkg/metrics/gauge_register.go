@@ -15,11 +15,13 @@ func NewGaugeRegisterHandler(registry *Registry) *GaugeRegisterHandler {
 }
 
 func (h *GaugeRegisterHandler) Handle(value interface{}) error {
-	registerCmd, ok := value.(*payload.GaugeRegisterCmd)
+	packetRegisterCmd, ok := value.(*payload.Packet_GaugeRegisterCmd)
 
 	if !ok {
 		return errors.New("unexpected value for gauge register handler")
 	}
+
+	registerCmd := packetRegisterCmd.GaugeRegisterCmd
 
 	if err := h.registry.RegisterGauge(registerCmd.Name, registerCmd.Help, registerCmd.Labels); err != nil {
 		return err

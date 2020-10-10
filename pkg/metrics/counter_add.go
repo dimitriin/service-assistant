@@ -15,11 +15,13 @@ func NewCounterAddHandler(registry *Registry) *CounterAddHandler {
 }
 
 func (h *CounterAddHandler) Handle(value interface{}) error {
-	addCmd, ok := value.(*payload.CounterAddCmd)
+	packetAddCmd, ok := value.(*payload.Packet_CounterAddCmd)
 
 	if !ok {
 		return errors.New("unexpected value for counter add handler")
 	}
+
+	addCmd := packetAddCmd.CounterAddCmd
 
 	counter, err := h.registry.GetCounter(addCmd.Name)
 

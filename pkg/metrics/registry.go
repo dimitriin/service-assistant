@@ -20,7 +20,12 @@ type Registry struct {
 }
 
 func NewRegistry(cfg config.Metrics) *Registry {
-	return &Registry{cfg: cfg, counters: map[string]*prometheus.CounterVec{}}
+	return &Registry{
+		cfg:        cfg,
+		counters:   map[string]*prometheus.CounterVec{},
+		histograms: map[string]*prometheus.HistogramVec{},
+		gauges:     map[string]*prometheus.GaugeVec{},
+	}
 }
 
 func (r *Registry) Register() error {

@@ -15,11 +15,13 @@ func NewHistogramRegisterHandler(registry *Registry) *HistogramRegisterHandler {
 }
 
 func (h *HistogramRegisterHandler) Handle(value interface{}) error {
-	registerCmd, ok := value.(*payload.HistogramRegisterCmd)
+	packetRegisterCmd, ok := value.(*payload.Packet_HistogramRegisterCmd)
 
 	if !ok {
 		return errors.New("unexpected value for histogram register handler")
 	}
+
+	registerCmd := packetRegisterCmd.HistogramRegisterCmd
 
 	if err := h.registry.RegisterHistogram(registerCmd.Name, registerCmd.Help, registerCmd.Labels, registerCmd.Buckets); err != nil {
 		return err

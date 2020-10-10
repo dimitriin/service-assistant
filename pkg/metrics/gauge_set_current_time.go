@@ -15,11 +15,13 @@ func NewGaugeSetToCurrentTimeHandler(registry *Registry) *GaugeSetToCurrentTimeH
 }
 
 func (h *GaugeSetToCurrentTimeHandler) Handle(value interface{}) error {
-	setCmd, ok := value.(*payload.GaugeSetToCurrentTimeCmd)
+	packetSetCmd, ok := value.(*payload.Packet_GaugeSetToCurrentTimeCmd)
 
 	if !ok {
 		return errors.New("unexpected value for gauge set to current time handler")
 	}
+
+	setCmd := packetSetCmd.GaugeSetToCurrentTimeCmd
 
 	gauge, err := h.registry.GetGauge(setCmd.Name)
 

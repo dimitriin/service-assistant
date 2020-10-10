@@ -1,6 +1,10 @@
 package metrics
 
-import "github.com/dimitriin/service-assistant/pkg/protocol/payload"
+import (
+	"errors"
+
+	"github.com/dimitriin/service-assistant/pkg/protocol/payload"
+)
 
 type HistogramObserveHandler struct {
 	registry *Registry
@@ -11,7 +15,13 @@ func NewHistogramObserveHandler(registry *Registry) *HistogramObserveHandler {
 }
 
 func (h *HistogramObserveHandler) Handle(value interface{}) error {
-	observeCmd := value.(*payload.HistogramObserveCmd)
+	packetObserveCmd, ok := value.(*payload.Packet_HistogramObserveCmd)
+
+	if !ok {
+		return errors.New("unexpected value for histogram observe handler")
+	}
+
+	observeCmd := packetObserveCmd.HistogramObserveCmd
 
 	histogram, err := h.registry.GetHistogram(observeCmd.Name)
 
