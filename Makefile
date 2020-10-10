@@ -8,8 +8,12 @@ build:
 .PHONY: build
 
 image:
-	docker build -t dimitriin/service-assistant -f ./.docker/service-assistant/Dockerfile .
+	docker build -t dimitriin/service-assistant:latest -f ./.docker/service-assistant/Dockerfile .
 .PHONY: image
+
+push-image:
+	docker push dimitriin/service-assistant:latest
+.PHONY: push-image
 
 build-assisted-service-example:
 	go build -o bin/assisted-service-example ./cmd/assisted-service-example
