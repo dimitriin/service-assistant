@@ -37,6 +37,8 @@ func (u *PacketStreamProcessor) Process() error {
 				continue
 			}
 
+			u.logger.Info("incoming packet", zap.Any("packet", p))
+
 			u.wg.Add(1)
 
 			go func(p *payload.Packet) {
