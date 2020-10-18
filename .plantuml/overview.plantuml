@@ -1,0 +1,15 @@
+@startuml
+    package "Your Service POD" {
+        [Your Service] -right-> UnixSocket: helth/ready status\nprometheus metrics
+        [Service Assistant] -left->  UnixSocket
+        [Service Assistant] - HTTP
+    }
+
+    package "Kubelet" {
+        [Probes scrapper] -up->  HTTP: /readyz\n/healthz
+    }
+
+    package "Prometheus" {
+            [Metrics scrapper] -up-> HTTP: /metrics
+    }
+@enduml
