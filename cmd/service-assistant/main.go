@@ -106,7 +106,7 @@ func main() {
 			reflect.TypeOf(&payload.Packet_GaugeSetCmd{}).String():              metrics.NewGaugeSetHandler(registry),
 			reflect.TypeOf(&payload.Packet_GaugeSubCmd{}).String():              metrics.NewGaugeSubHandler(registry),
 		}),
-		zap.NewNop(),
+		logger,
 	)
 
 	errCh := make(chan error, 2)
